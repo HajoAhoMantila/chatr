@@ -1,0 +1,2 @@
+# chatr
+Chat application MVP
