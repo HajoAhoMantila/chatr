@@ -57,3 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
+# JsGiven-Reports
+jGiven-report
+.jsGiven-reports
+
+# IntelliJ
+.idea
