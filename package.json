@@ -6,10 +6,11 @@
   "author": "Hajo Aho-Mantila <hans.joachim.aho.mantila@gmail.com>",
   "license": "MIT",
   "dependencies": {},
-  "scripts": {
-    "test": "cd functional_tests; yarn test"
-  },
   "devDependencies": {
     "create-react-app": "^1.5.1"
+  },
+  "scripts": {
+    "install": "(cd functional_tests && yarn)",
+    "test": "(cd functional_tests && yarn test)"
   }
 }

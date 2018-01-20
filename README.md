@@ -18,11 +18,11 @@ To bootstrap the dev environment, source this script:
 
 Later you can activate the environment using
 
-`. scripts/dev-activate.sh` 
+`nvm use`
 
 ### Running the tests
 
-To run all tests, run
+To run all tests, run in the project root directory
 
  `yarn test`
 
@@ -68,3 +68,14 @@ https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3
 
 Real World React + Redux
 https://github.com/gothinkster/react-redux-realworld-example-app
+
+### Travis CI
+
+Ubuntu Trusty build environment
+https://docs.travis-ci.com/user/reference/trusty/
+
+Node.js
+https://docs.travis-ci.com/user/languages/javascript-with-nodejs/
+
+Chrome Headless
+https://docs.travis-ci.com/user/chrome
