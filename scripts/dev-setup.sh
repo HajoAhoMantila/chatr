@@ -1,9 +1,12 @@
 #!/bin/sh
 
 # Basic node environment setup. Assumes nvm (https://github.com/creationix/nvm) is available.
+# Source this script to bootstrap the dev environment.
 
-nvm install 8.9.4
+. scripts/dev-env.sh
+
+nvm install $NODE_VERSION
 
 npm install -g yarn
 
-yarn install
+(cd functional_tests; yarn install)
