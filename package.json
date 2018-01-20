@@ -10,7 +10,7 @@
     "create-react-app": "^1.5.1"
   },
   "scripts": {
-    "install": "(cd functional_tests && yarn)",
-    "test": "(cd functional_tests && yarn test)"
+    "install": "(cd client && yarn) && (cd functional_tests && yarn)",
+    "test": "(cd client; yarn start &) && (cd client && CI=true yarn test) && (cd functional_tests && yarn test)"
   }
 }
