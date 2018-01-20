@@ -1,4 +1,4 @@
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![Build Status](https://travis-ci.org/HajoAhoMantila/chatr.svg?branch=master)](https://travis-ci.org/HajoAhoMantila/chatr)
 
 # chatr
 Chat application MVP
@@ -7,7 +7,7 @@ Chat application MVP
 
 ### Development dependencies
 
-* The setup scripts for the dev environment assuem nvm (Node Version Manager https://github.com/creationix/nvm) is available.
+* The setup scripts for the dev environment assume nvm (Node Version Manager https://github.com/creationix/nvm) is available.
 * A current version of Chrome is required for the functional tests 
  
 ### Development environment setup
