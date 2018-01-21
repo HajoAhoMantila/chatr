@@ -4,18 +4,18 @@ import PropTypes from 'prop-types';
 class NicknameForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: '' };
+    this.value = '';
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ value: event.target.value });
+    this.value = event.target.value;
   }
 
   handleSubmit(event) {
-    this.props.setNicknameCallback(this.state.value);
+    this.props.setNicknameCallback(this.value);
     event.preventDefault();
   }
 
