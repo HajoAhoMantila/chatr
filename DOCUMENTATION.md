@@ -8,6 +8,9 @@
 ### JsGiven Scenario tests are written for functional tests
 Rationale: to have readable test output documenting the system behaviour
 
+### AirBnb JavaScript coding style is adopted (https://github.com/airbnb/javascript)
+Seems to be a sane default choice
+
 ## Resources
 
 ### Basic node & tooling
@@ -38,6 +41,17 @@ https://github.com/jsGiven/jsGiven/tree/master/examples/jest-node-8
 
 SinonJS: Standalone test spies, stubs and mocks for JavaScript. 
 http://sinonjs.org/
+
+## Linting
+
+AirBnb Code style
+https://github.com/airbnb/javascript
+
+ESLint for React with AirBnb configuration
+https://groundberry.github.io/development/2017/06/11/create-react-app-linting-all-the-things.html
+
+Webstorm configuration
+https://www.themarketingtechnologist.co/eslint-with-airbnb-javascript-style-guide-in-webstorm/
 
 ### React
 

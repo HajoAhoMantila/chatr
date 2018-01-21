@@ -7,7 +7,8 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "create-react-app": "^1.5.1"
+    "create-react-app": "^1.5.1",
+    "jscs": "^3.0.7"
   },
   "scripts": {
     "install": "(cd client && yarn) && (cd functional_tests && yarn)",

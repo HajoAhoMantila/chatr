@@ -5,17 +5,25 @@
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.1.0"
+    "react-scripts": "^1.1.0",
+    "prop-types": "^15.6.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "pretest": "eslint --ignore-path .gitignore src",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^4.16.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "jscs": "^3.0.7",
     "react-test-renderer": "^16.2.0",
     "sinon": "^4.2.0"
   }
