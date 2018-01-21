@@ -14,6 +14,7 @@ class NicknameForm extends Component {
     }
 
     handleSubmit(event) {
+        this.props.setNicknameCallback(this.state.value);
         event.preventDefault();
     }
 
@@ -22,7 +23,7 @@ class NicknameForm extends Component {
             <form id="nickname-input" onSubmit={this.handleSubmit}>
                 <label>
                     Name:
-                    <input id="nickname-input-text" type="text" value={this.state.value} onChange={this.handleChange}/>
+                    <input id="nickname-input-text" type="text" onChange={this.handleChange}/>
                 </label>
                 <input id="nickname-input-submit" type="submit" value="Submit"/>
             </form>

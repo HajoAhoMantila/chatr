@@ -17,6 +17,7 @@ class GivenUser extends Stage {
 
 class WhenChooseNickname extends Stage {
     @State chrome;
+    @State nickname;
 
     the_user_opens_the_app() {
         doAsync(async () => {
@@ -24,10 +25,21 @@ class WhenChooseNickname extends Stage {
         });
         return this;
     }
+
+    the_user_enters_a_nickname() {
+        this.nickname = Math.random().toString(36).substring(10);
+        doAsync(async () => {
+            await this.chrome.type('#nickname-input-text', this.nickname);
+            await this.chrome.click('#nickname-input-submit');
+        });
+        return this;
+    }
+
 }
 
 class ThenChooseNickname extends Stage {
     @State chrome;
+    @State nickname;
 
     the_user_can_see_an_input_field_for_a_nickname() {
         doAsync(async () => {
@@ -36,6 +48,15 @@ class ThenChooseNickname extends Stage {
         });
         return this;
     }
+
+    the_nickname_is_displayed() {
+        doAsync(async () => {
+            const nickname_text = await this.chrome.text("#nickname");
+            expect(nickname_text).toBe(this.nickname);
+        });
+        return this;
+    }
+
 }
 
 scenarios(
@@ -49,6 +70,14 @@ scenarios(
                 when().the_user_opens_the_app();
 
                 then().the_user_can_see_an_input_field_for_a_nickname();
+            }),
+            the_chosen_nickname_is_displayed: scenario({}, () => {
+                given().a_user_with_a_Chrome_browser();
+
+                when().the_user_opens_the_app()
+                    .and().the_user_enters_a_nickname();
+
+                then().the_nickname_is_displayed();
             })
         };
     }
