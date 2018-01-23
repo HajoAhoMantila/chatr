@@ -5,6 +5,8 @@
 ### Node + React is used
 ...as the goal is to learn it.
 
+### ES6 is used
+
 ### JsGiven Scenario tests are written for functional tests
 Rationale: to have readable test output documenting the system behaviour
 
@@ -20,9 +22,6 @@ https://github.com/creationix/nvm
 
 Babel
 https://babeljs.io/
-
-Prettier
-https://prettier.io/docs/en/cli.html
 
 ### Testing
 
@@ -80,6 +79,9 @@ http://airbnb.io/enzyme/
 
 https://medium.com/dailyjs/combining-react-with-socket-io-for-real-time-goodness-d26168429a34 
 https://github.com/onedesign/express-socketio-tutorial
+
+### Integrated project (React + Express + Heroku deployment)
+https://originmaster.com/running-create-react-app-and-express-crae-on-heroku-c39a39fe7851
 
 ### Travis CI
 

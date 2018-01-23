@@ -5,6 +5,7 @@ import { Chrome } from 'navalia';
 setupForRspec(describe, it);
 
 let createdChromes = [];
+const hostname = process.env.CHATR_URL || 'http://localhost:3000';
 
 class GivenUser extends Stage {
     @State chrome;
@@ -22,7 +23,7 @@ class WhenChooseNickname extends Stage {
 
     the_user_opens_the_app() {
       doAsync(async () => {
-        await this.chrome.goto('http://localhost:3000');
+        await this.chrome.goto(hostname);
       });
       return this;
     }
