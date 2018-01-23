@@ -11,7 +11,10 @@
     "jscs": "^3.0.7"
   },
   "scripts": {
-    "install": "(cd client && yarn) && (cd functional_tests && yarn)",
-    "test": "(cd client; yarn start &) && (cd client && CI=true yarn test) && (cd functional_tests && yarn test)"
+    "install": "(cd client && yarn) && (cd server && yarn) && (cd functional_tests && yarn)",
+    "test-client": "(cd client; yarn start & ) && (cd client && CI=true yarn test)",
+    "test-server": "(cd server; yarn test)",
+    "test-functional": "(cd functional_tests && yarn test)",
+    "test": "yarn test-client && yarn test-server && yarn test-functional"
   }
 }
