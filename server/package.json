@@ -27,6 +27,8 @@
   "scripts": {
     "pretest": "eslint src/*.js",
     "test": "jest",
-    "start": "nodemon -r babel-register ./src/server.js"
+    "start": "nodemon -r babel-register ./src/server.js",
+    "build": "babel ./src --ignore node_modules,build,'**/*.test.js' --out-dir build",
+    "start:prod": "node build/server.js"
   }
 }

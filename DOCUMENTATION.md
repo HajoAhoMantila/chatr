@@ -76,6 +76,11 @@ https://facebook.github.io/jest/docs/en/tutorial-react.html
 Enzyme for component testing
 http://airbnb.io/enzyme/
 
+### Express & Socket.IO
+
+https://medium.com/dailyjs/combining-react-with-socket-io-for-real-time-goodness-d26168429a34 
+https://github.com/onedesign/express-socketio-tutorial
+
 ### Travis CI
 
 Ubuntu Trusty build environment
