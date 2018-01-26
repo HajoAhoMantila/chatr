@@ -25,6 +25,7 @@
     "socket.io": "^2.0.4"
   },
   "scripts": {
+    "eslint-fix": "eslint --fix src/*.js",
     "pretest": "eslint src/*.js",
     "test": "jest",
     "start": "nodemon -r babel-register ./src/server.js",

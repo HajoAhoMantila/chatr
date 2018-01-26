@@ -66,7 +66,7 @@ function checkValidServiceWorker(swUrl) {
       }
     })
     .catch(() => {
-      console.log('No internet connection found. App is running in offline mode.');
+      console.log('No internet connection found. ChatrApp is running in offline mode.');
     });
 }
 export default function register() {

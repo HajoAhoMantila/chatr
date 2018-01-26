@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class NicknameForm extends Component {
+export default class NicknameForm extends Component {
   constructor(props) {
     super(props);
     this.value = '';
@@ -31,9 +31,7 @@ class NicknameForm extends Component {
   }
 }
 
-
 NicknameForm.propTypes = {
   setNicknameCallback: PropTypes.func.isRequired,
 };
 
-export default NicknameForm;

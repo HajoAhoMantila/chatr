@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Chatr app functional tests",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.1",
     "babel-jest": "^22.1.0",
@@ -19,9 +19,11 @@
     "js-given": "^0.1.8",
     "jscs": "^3.0.7",
     "navalia": "^1.2.0",
-    "regenerator-runtime": "^0.11.1"
+    "regenerator-runtime": "^0.11.1",
+    "randomstring": "^1.1.5"
   },
   "scripts": {
+    "eslint-fix": "eslint --fix *.js",
     "pretest": "eslint *.js && jsgiven clean",
     "test": "jest || jsgiven report --fail",
     "posttest": "jsgiven report"

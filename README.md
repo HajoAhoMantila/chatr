@@ -58,9 +58,10 @@ To deploy a new revision to Heroku, run
 This assumes you have previously set up a Heroku app using the Heroku CLI, e.g. 
 
 `heroku login`
-`heroku create chatr`
+
+`heroku create chatr` (you need to choose a different app name)
+
 `heroku buildpacks:set https://github.com/heroku/heroku-buildpack-nodejs#yarn`
-`git push heroku master`
 
 ### Testing the production app
 

@@ -80,8 +80,12 @@ http://airbnb.io/enzyme/
 https://medium.com/dailyjs/combining-react-with-socket-io-for-real-time-goodness-d26168429a34 
 https://github.com/onedesign/express-socketio-tutorial
 
-### Integrated project (React + Express + Heroku deployment)
+### Setup of integrated projects
+React + Express + Heroku deployment 
 https://originmaster.com/running-create-react-app-and-express-crae-on-heroku-c39a39fe7851
+
+React + Node
+https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/
 
 ### Travis CI
 
