@@ -23,6 +23,9 @@ https://github.com/creationix/nvm
 Babel
 https://babeljs.io/
 
+updtr - automatic update + test of dependencies
+https://github.com/peerigon/updtr
+
 ### Testing
 
 Jest testrunner

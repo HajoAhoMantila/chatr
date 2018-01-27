@@ -9,7 +9,8 @@
     "concurrently": "^3.5.1"
   },
   "devDependencies": {
-    "create-react-app": "^1.5.1"
+    "create-react-app": "^1.5.1",
+    "updtr": "^2.0.0"
   },
   "scripts": {
     "install": "(cd client && yarn) && (cd server && yarn) && (cd functional_tests && yarn)",
