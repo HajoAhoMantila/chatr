@@ -15,8 +15,8 @@ export default class SocketIoClient {
   }
 
   initializeSocket() {
-    this.socket.on('messageFromServer', (message) => {
-      this.chat.onReceiveChatMessage(message);
+    this.socket.on('messageFromServer', (messageData) => {
+      this.chat.onReceiveChatMessage(messageData);
     });
 
     this.socket.on('error', (error) => {
@@ -32,8 +32,8 @@ export default class SocketIoClient {
     });
   }
 
-  sendMessage(message) {
-    this.socket.emit('messageFromClient', message);
+  sendMessage(messageData) {
+    this.socket.emit('messageFromClient', messageData);
   }
 
   error(errorMessage) {

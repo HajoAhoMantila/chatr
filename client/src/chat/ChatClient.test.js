@@ -22,9 +22,10 @@ test('Sets nickname and calls callback', () => {
 });
 
 test('Sends message using remote client', () => {
+  client.setNickname('Alice');
   client.sendMessage('foo');
 
-  expect(socketIoClient.sendMessage).toBeCalledWith('foo');
+  expect(socketIoClient.sendMessage).toBeCalledWith({ nickname: 'Alice', message: 'foo' });
 });
 
 test('Adds received chat message to message list', () => {

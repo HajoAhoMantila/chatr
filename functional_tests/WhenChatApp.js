@@ -9,6 +9,7 @@ export default class WhenChatApp extends Stage {
   @State chromes;
   @State nickname;
   @State message;
+  @State messages = new Map();
 
   setChromeForUser(nickname) {
     expect(this.chromes.has(nickname)).toBeTruthy();
@@ -45,7 +46,13 @@ export default class WhenChatApp extends Stage {
 
   the_user_$_sends_a_chat_message(nickname) {
     this.setChromeForUser(nickname);
-    return this.the_user_sends_a_chat_message();
+    this.message = nickname + generate(32);
+    doAsync(async () => {
+      await this.chrome.type('#message-input-text', this.message);
+      await this.chrome.type('#message-input-text', '\r');
+    });
+    this.messages.set(nickname, this.message);
+    return this;
   }
 
   the_user_sends_a_chat_message() {
@@ -54,5 +61,6 @@ export default class WhenChatApp extends Stage {
       await this.chrome.type('#message-input-text', this.message);
       await this.chrome.type('#message-input-text', '\r');
     });
+    return this;
   }
 }

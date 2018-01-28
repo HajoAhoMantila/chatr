@@ -19,17 +19,17 @@ export default class ChatClient {
   }
 
   sendMessage(message) {
-    this.remoteClient.sendMessage(message);
+    this.remoteClient.sendMessage({ nickname: this.nickname, message });
     this.notify();
   }
 
-  onReceiveChatMessage(message) {
-    this.messages = this.messages.push(message);
+  onReceiveChatMessage(messageData) {
+    this.messages = this.messages.push(messageData);
     this.notify();
   }
 
-  onReceiveSystemMessage(message) {
-    this.messages = this.messages.push(message);
+  onReceiveSystemMessage(messageData) {
+    this.messages = this.messages.push(messageData);
     this.notify();
   }
 

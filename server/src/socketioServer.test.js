@@ -28,12 +28,14 @@ describe('Socket.IO Server responds to a single client', () => {
   });
 
   test('Server sends chat message back to client', (done) => {
+    const testPayload = { nickname: 'Alice', message: 'test message' };
+
     client.on('messageFromServer', (data) => {
-      expect(data.message).toBe('test message');
+      expect(data).toEqual(testPayload);
       done();
     });
 
-    client.emit('messageFromClient', { message: 'test message' });
+    client.emit('messageFromClient', testPayload);
   });
 });
 
@@ -53,7 +55,7 @@ describe('Socket.io server responds to multiple clients', () => {
 
   test('Socket.IO Server broadcasts message to sender and one other client', (done) => {
     let remainingClientsToReceive = 2;
-    const testData = { message: 'test message' };
+    const testData = { nickname: 'Bob', message: 'test message' };
 
     function stopIfAllClientsReceived() {
       remainingClientsToReceive -= 1;

@@ -10,12 +10,15 @@ describe('<Chatroom />', () => {
   it('Should render the chat log', () => {
     const wrapper = shallow(<Chatroom
       sendMessageCallback={jest.fn()}
-      messages={new List(['Foo', 'Bar'])}
+      messages={new List([
+        { nickname: 'Alice', message: 'Foo' },
+        { nickname: 'Bob', message: 'Bar' },
+      ])}
     />);
 
     expect(wrapper.find('li')).toHaveLength(2);
-    expect(wrapper.find('li').at(0).text()).toBe('Foo');
-    expect(wrapper.find('li').at(1).text()).toBe('Bar');
+    expect(wrapper.find('li').at(0).text()).toBe('Alice: Foo');
+    expect(wrapper.find('li').at(1).text()).toBe('Bob: Bar');
   });
   it('Should call callback when new message is submitted', () => {
     const sendMessageCallback = jest.fn();

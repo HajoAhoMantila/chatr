@@ -1,11 +1,12 @@
 /* eslint-disable camelcase */
 import { doAsync, Stage, State } from 'js-given';
 
-export default class ThenChooseNickname extends Stage {
+export default class ThenChatApp extends Stage {
   @State chrome;
   @State chromes;
   @State nickname;
   @State message;
+  @State messages;
 
   setChromeForUser(nickname) {
     expect(this.chromes.has(nickname)).toBeTruthy();
@@ -33,6 +34,13 @@ export default class ThenChooseNickname extends Stage {
     });
   }
 
+  expectElementContainsText(selector, expectedText) {
+    doAsync(async () => {
+      const text = await this.chrome.text(selector);
+      expect(text).toContain(expectedText);
+    });
+  }
+
   the_user_can_see_an_input_field_for_a_nickname() {
     this.expectElementExists('#nickname-input');
     return this;
@@ -54,12 +62,16 @@ export default class ThenChooseNickname extends Stage {
   }
 
   the_chat_message_is_displayed_in_the_chat_room() {
-    this.expectElementHasText('li', this.message);
+    const expectedMessage = `${this.nickname}: ${this.message}`;
+    this.expectElementHasText('li', expectedMessage);
     return this;
   }
 
-  user_$_can_see_the_chat_message(nickname) {
-    this.setChromeForUser(nickname);
-    this.the_chat_message_is_displayed_in_the_chat_room();
+  user_$_can_see_the_chat_message_of_user_$(receiver, sender) {
+    this.setChromeForUser(receiver);
+    const messageFromSender = this.messages.get(sender);
+    const expectedMessage = `${sender}: ${messageFromSender}`;
+    this.expectElementHasText(`[id^=${sender}]`, expectedMessage);
+    return this;
   }
 }

@@ -19,12 +19,15 @@ export default class Chatroom extends Component {
   }
 
   chatMessageListItems() {
-    const messageKey = function messageKey(message, index) {
-      return `${message}-${index}`;
-    };
+    const messageKey = (message, index) => `${message.message}-${index}`;
+    const messageId = (message, index) => `${message.nickname}-${index}`;
 
     const { messages } = this.props;
-    return messages.map((message, index) => <li key={messageKey(message, index)}>{message}</li>);
+    return messages.map((message, index) => (
+      <li id={messageId(message, index)} key={messageKey(message, index)}>
+        <div>{message.nickname}: </div><div>{message.message}</div>
+      </li>
+    ));
   }
 
   render() {
