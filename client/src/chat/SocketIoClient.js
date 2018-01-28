@@ -1,16 +1,14 @@
 import io from 'socket.io-client';
 
 export default class SocketIoClient {
-  constructor(url = undefined, timeout = 20000) {
+  constructor(url = undefined) {
     this.chat = undefined;
     this.url = url;
-    this.timeout = timeout;
   }
 
   connect(chat) {
-    const ioOptions = { timeout: this.timeout };
     this.chat = chat;
-    this.socket = this.url ? io(this.url, ioOptions) : io({ options: ioOptions });
+    this.socket = this.url ? io(this.url) : io();
     this.initializeSocket();
   }
 
@@ -37,7 +35,7 @@ export default class SocketIoClient {
   }
 
   error(errorMessage) {
-    this.chat.onReceiveChatMessage(errorMessage);
+    this.chat.onReceiveSystemMessage(errorMessage);
   }
 
   close() {

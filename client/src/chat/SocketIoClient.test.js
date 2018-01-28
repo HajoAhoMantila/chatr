@@ -40,3 +40,21 @@ describe('Socket.io client/server integration tests - happy path', () => {
     ioClient.sendMessage();
   });
 });
+
+describe('Socket.io client/server integration tests - error scenarios', () => {
+  afterEach((done) => {
+    ioClient.close();
+    done();
+  });
+
+  test('Socket.io yields error message if server down', (done) => {
+    ChatClient.mockImplementation(() => ({
+      onReceiveSystemMessage: (message) => {
+        expect(message).toContain('Error connecting to server');
+        done();
+      },
+    }));
+    ioClient = new SocketIoClient(url);
+    ioClient.connect(new ChatClient());
+  });
+});

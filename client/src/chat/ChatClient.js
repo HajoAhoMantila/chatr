@@ -10,6 +10,7 @@ export default class ChatClient {
     this.setNickname = this.setNickname.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.onReceiveChatMessage = this.onReceiveChatMessage.bind(this);
+    this.onReceiveSystemMessage = this.onReceiveSystemMessage.bind(this);
   }
 
   setNickname(nickname) {
@@ -29,7 +30,7 @@ export default class ChatClient {
   }
 
   onReceiveSystemMessage(messageData) {
-    this.messages = this.messages.push(messageData);
+    this.messages = this.messages.push({ nickname: 'System', message: messageData });
     this.notify();
   }
 

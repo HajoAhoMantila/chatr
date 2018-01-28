@@ -29,15 +29,17 @@ test('Sends message using remote client', () => {
 });
 
 test('Adds received chat message to message list', () => {
-  client.onReceiveChatMessage('bar');
+  const messageData = { nickname: 'Alice', message: 'foo' };
+  client.onReceiveChatMessage(messageData);
 
   expect(notifyCallback).toBeCalledWith(client);
-  expect(client.messages).toContain('bar');
+  expect(client.messages).toContainEqual(messageData);
 });
 
 test('Adds received system message to message list', () => {
-  client.onReceiveSystemMessage('system');
+  client.onReceiveSystemMessage('errormessage');
 
   expect(notifyCallback).toBeCalledWith(client);
-  expect(client.messages).toContain('system');
+  const expectedMessageData = { nickname: 'System', message: 'errormessage' };
+  expect(client.messages).toContainEqual(expectedMessageData);
 });
