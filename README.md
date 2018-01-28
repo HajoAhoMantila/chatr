@@ -3,6 +3,15 @@
 # chatr (https://chatr.herokuapp.com/)
 Chat application MVP 
 
+The app is staged automatically to Heroku at http://chatr.herokuapp.com/ 
+
+GitHub Repo: https://github.com/HajoAhoMantila/chatr
+
+CI: https://travis-ci.org/HajoAhoMantila/chatr
+
+JGiven scenario test reports are published at 
+https://s3.eu-central-1.amazonaws.com/chatr-artifacts/index.html
+
 ## Getting started
 
 ### Development dependencies

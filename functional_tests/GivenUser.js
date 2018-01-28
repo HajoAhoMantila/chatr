@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { Stage, State } from 'js-given';
-import { Chrome } from 'navalia/build/index';
+import { Chrome } from 'navalia';
 
 let createdChromes = [];
 
@@ -9,7 +9,8 @@ class GivenUser extends Stage {
   @State chromes = new Map();
 
   createNewChromeAndSetAsCurrent() {
-    this.chrome = new Chrome();
+    const chromeTimeout = (process.env.NAVALIA_TIMEOUT || 1000);
+    this.chrome = new Chrome({ timeout: chromeTimeout });
     createdChromes.push(this.chrome);
     return this.chrome;
   }
