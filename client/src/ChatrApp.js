@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import './ChatrApp.css';
 import NicknameForm from './components/NicknameForm';
@@ -11,12 +12,12 @@ export default class ChatrApp extends Component {
 
     this.setChatState = this.setChatState.bind(this);
 
-    this.chat = new ChatClient(this.setChatState);
+    this.chat = this.props.chat ? this.props.chat : new ChatClient(this.setChatState);
     this.state = { nickname: this.chat.nickname, messages: this.chat.messages };
   }
 
   componentWillMount() {
-    this.io = new SocketIoClient(this.chat);
+    this.io = this.props.remoteClient ? this.props.remoteClient : new SocketIoClient(this.chat);
   }
 
   componentWillUnmount() {
@@ -44,3 +45,14 @@ export default class ChatrApp extends Component {
     );
   }
 }
+
+// eslint: PropTypes.object is required to allow passing in a mock
+ChatrApp.propTypes = {
+  chat: PropTypes.instanceOf(ChatClient),
+  remoteClient: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+};
+
+ChatrApp.defaultProps = {
+  chat: undefined,
+  remoteClient: undefined,
+};
