@@ -12,29 +12,31 @@ const url = `http://localhost:${testPort}/`;
 let server;
 let ioClient;
 
-beforeEach((done) => {
-  server = http.Server(express());
-  setupSocketIoServer(server);
-  server.listen(testPort);
+describe('Socket.io client/server integration tests - happy path', () => {
+  beforeEach((done) => {
+    server = http.Server(express());
+    setupSocketIoServer(server);
+    server.listen(testPort);
 
-  done();
+    done();
+  });
+
+  afterEach((done) => {
+    server.close();
+    ioClient.close();
+    done();
+  });
+
+  test('Socket.io client sends and receives message', (done) => {
+    ChatClient.mockImplementation(() => ({
+      onReceiveChatMessage: (message) => {
+        expect(message).toBe(message);
+        done();
+      },
+    }));
+    ioClient = new SocketIoClient(url);
+    ioClient.connect(new ChatClient());
+
+    ioClient.sendMessage();
+  });
 });
-
-afterEach((done) => {
-  server.close();
-  ioClient.close();
-  done();
-});
-
-test('Socket.io client sends and receives message', (done) => {
-  ChatClient.mockImplementation(() => ({
-    setRemoteClient: () => {},
-    onReceiveMessage: (message) => {
-      expect(message).toBe(message);
-      done();
-    },
-  }));
-  ioClient = new SocketIoClient(new ChatClient(), url);
-  ioClient.sendMessage();
-});
-

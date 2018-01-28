@@ -1,22 +1,20 @@
 import { List } from 'immutable';
 
 export default class ChatClient {
-  constructor(stateChangeCallback) {
+  constructor(stateChangeCallback, remoteClient) {
     this.stateChangeCallback = stateChangeCallback;
     this.nickname = undefined;
     this.messages = new List();
+    this.remoteClient = remoteClient;
 
     this.setNickname = this.setNickname.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
-    this.onReceiveMessage = this.onReceiveMessage.bind(this);
-  }
-
-  setRemoteClient(remoteClient) {
-    this.remoteClient = remoteClient;
+    this.onReceiveChatMessage = this.onReceiveChatMessage.bind(this);
   }
 
   setNickname(nickname) {
     this.nickname = nickname;
+    this.remoteClient.connect(this);
     this.notify();
   }
 
@@ -25,7 +23,12 @@ export default class ChatClient {
     this.notify();
   }
 
-  onReceiveMessage(message) {
+  onReceiveChatMessage(message) {
+    this.messages = this.messages.push(message);
+    this.notify();
+  }
+
+  onReceiveSystemMessage(message) {
     this.messages = this.messages.push(message);
     this.notify();
   }

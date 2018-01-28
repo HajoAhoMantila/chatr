@@ -12,12 +12,12 @@ export default class ChatrApp extends Component {
 
     this.setChatState = this.setChatState.bind(this);
 
-    this.chat = this.props.chat ? this.props.chat : new ChatClient(this.setChatState);
-    this.state = { nickname: this.chat.nickname, messages: this.chat.messages };
+    this.state = { nickname: undefined, messages: undefined };
   }
 
   componentWillMount() {
-    this.io = this.props.remoteClient ? this.props.remoteClient : new SocketIoClient(this.chat);
+    this.io = this.props.remoteClient ? this.props.remoteClient : new SocketIoClient();
+    this.chat = this.props.chat ? this.props.chat : new ChatClient(this.setChatState, this.io);
   }
 
   componentWillUnmount() {
