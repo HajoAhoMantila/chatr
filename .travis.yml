@@ -15,6 +15,7 @@ deploy:
     local_dir: functional_tests/jGiven-report
     on:
       repo: HajoAhoMantila/chatr
+    acl: public_read
   - provider: heroku
     api_key:
       secure: OwD4QDGwSRSVItDeXTOTsa2PWjZ1/3bv4gAFvnh4iIelcdl1Ba0Hm6oSB9NMOZqLQ2uThGMigGpasXB9VnuE/JbHfoMdVEmEP9MLzCQDKqF4jDfCNnRz7WWVtPF9jGV4/BFuG4i5PNxVI28giJjEG25D14oBmrX8/7yY1ENrTuyrLUms6aIByhDenlB/kNeudVm+oPKFVA2hO2c4mRhybtPhDvMgFguuyeEvwPUE6N52j0Ou+jAJ3pEtU3Tb+/g8asziKtAtWEawEkJD0IOwnkE8TMb6/ErJcQ7JaverfiqjtTfNRgSxsVUptE9hFA6ja9m/1BrxoxxNPhqnanaMFRrd7cIgyod8G7a5woyR7m25IaYI9VIvtTT8r169mahQWJQEzXJop5aRj2OhLxTo+/ZpXlcolmqegfRu4/wT4DxuHJlC3HCwSnIEOfjOSXywfZXhjxmnzPtk+BIuvySs6NhDXcs/p4VfyhhZJ5Mc2BIz4Cm5+BIqsg9/xj2A7Z2p6ZTtA4gvGUITGR3g+tG0VsJj4tnTsmzccNQElYAbqtgQqe8kAbBFtmd9lNf0VDCLGvOCdelLbvWYGM1ILQiYpzV6omRVakV5eTIU93vc6isedqblhCZwgyYrQhDzzKPCqPZ9GSL5jLdpHKo91l1GYW5jbubF4O/c6veefFzDC9U=
