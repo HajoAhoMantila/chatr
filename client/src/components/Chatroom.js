@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { List } from 'immutable';
 
 export default class Chatroom extends Component {
   constructor(props) {
@@ -44,10 +45,7 @@ export default class Chatroom extends Component {
 }
 
 Chatroom.propTypes = {
-  messages: PropTypes.arrayOf(PropTypes.string),
+  messages: PropTypes.instanceOf(List).isRequired,
   sendMessageCallback: PropTypes.func.isRequired,
 };
 
-Chatroom.defaultProps = {
-  messages: [],
-};

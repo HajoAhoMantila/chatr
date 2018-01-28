@@ -13,4 +13,6 @@ export default function setupSocketIoServer(httpServer) {
       onMessageFromClient(socket, data);
     });
   });
+
+  return io;
 }

@@ -6,12 +6,18 @@
 ...as the goal is to learn it.
 
 ### ES6 is used
+It's the default for create-react-app.
 
 ### JsGiven Scenario tests are written for functional tests
-Rationale: to have readable test output documenting the system behaviour
+To have readable test output documenting the system behaviour.
 
 ### AirBnb JavaScript coding style is adopted (https://github.com/airbnb/javascript)
-Seems to be a sane default choice
+Seems to be a sane default choice.
+
+### Only Immutable objects are used as React state objects
+All objects set as state and passed as props must be immutable 
+(as proposed by https://reactjs.org/docs/react-component.html#state).
+This enforces explicit state handling, resulting in more understandable code and less bugs.
 
 ## Resources
 
@@ -77,6 +83,11 @@ https://facebook.github.io/jest/docs/en/tutorial-react.html
 
 Enzyme for component testing
 http://airbnb.io/enzyme/
+
+Immutability
+http://reactkungfu.com/2015/08/pros-and-cons-of-using-immutability-with-react-js/
+https://facebook.github.io/immutable-js/
+
 
 ### Express & Socket.IO
 

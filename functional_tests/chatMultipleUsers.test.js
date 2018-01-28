@@ -28,9 +28,7 @@ scenarios(
         .the_user_$_sends_a_chat_message(userA);
 
       then().user_$_can_see_the_chat_message(userA);
-
-      // not yet implemented
-      // then().user_$_can_see_the_chat_message(userB);
+      then().user_$_can_see_the_chat_message(userB);
     }),
   }),
 );
