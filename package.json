@@ -4,7 +4,7 @@
   "main": "index.js",
   "repository": "git@github.com:HajoAhoMantila/chatr.git",
   "author": "Hajo Aho-Mantila <hans.joachim.aho.mantila@gmail.com>",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "dependencies": {
     "concurrently": "^3.5.1"
   },

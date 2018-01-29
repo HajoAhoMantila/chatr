@@ -16,10 +16,11 @@ describe('<Chatroom />', () => {
       ])}
     />);
 
-    expect(wrapper.find('li')).toHaveLength(2);
-    expect(wrapper.find('li').at(0).text()).toBe('Alice: Foo');
-    expect(wrapper.find('li').at(1).text()).toBe('Bob: Bar');
+    expect(wrapper.find('.message')).toHaveLength(2);
+    expect(wrapper.find('.message').at(0).text()).toBe('Alice:Foo');
+    expect(wrapper.find('.message').at(1).text()).toBe('Bob:Bar');
   });
+
   it('Should call callback when new message is submitted', () => {
     const sendMessageCallback = jest.fn();
     const wrapper = mount(<Chatroom

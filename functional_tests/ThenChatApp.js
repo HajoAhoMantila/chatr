@@ -22,7 +22,7 @@ export default class ThenChatApp extends Stage {
 
   expectElementDoesNotExist(selector) {
     doAsync(async () => {
-      const exists = await this.chrome.exists(selector);
+      const exists = await this.chrome.exists(selector, 500);
       expect(exists).toBeFalsy();
     });
   }
@@ -62,16 +62,19 @@ export default class ThenChatApp extends Stage {
   }
 
   the_chat_message_is_displayed_in_the_chat_room() {
-    const expectedMessage = `${this.nickname}: ${this.message}`;
-    this.expectElementHasText('li', expectedMessage);
+    const expectedMessage = ThenChatApp.buildExpectedMessage(this.nickname, this.message);
+    this.expectElementHasText('.message', expectedMessage);
     return this;
   }
 
   user_$_can_see_the_chat_message_of_user_$(receiver, sender) {
     this.setChromeForUser(receiver);
-    const messageFromSender = this.messages.get(sender);
-    const expectedMessage = `${sender}: ${messageFromSender}`;
+    const expectedMessage = ThenChatApp.buildExpectedMessage(sender, this.messages.get(sender));
     this.expectElementHasText(`[id^=${sender}]`, expectedMessage);
     return this;
+  }
+
+  static buildExpectedMessage(nickname, message) {
+    return `${nickname}:${message}`;
   }
 }

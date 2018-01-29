@@ -1,0 +1,23 @@
+#chatroom {
+  padding: 10px;
+}
+
+#chat-message-list {
+  height: 500px;
+  max-height: 500px;
+  overflow: auto;
+}
+
+.message {
+  width: 300px;
+  overflow: hidden; /* will contain if #first is longer than #second */
+}
+
+.message-nickname {
+  width: 100px;
+  float: left; /* add this */
+}
+
+.message-message {
+  overflow: hidden; /* if you don't want #second to wrap below #first */
+}

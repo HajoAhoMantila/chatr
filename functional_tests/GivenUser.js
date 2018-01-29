@@ -9,8 +9,10 @@ class GivenUser extends Stage {
   @State chromes = new Map();
 
   createNewChromeAndSetAsCurrent() {
-    const chromeTimeout = (process.env.NAVALIA_TIMEOUT || 1000);
-    this.chrome = new Chrome({ timeout: chromeTimeout });
+    const timeout = (process.env.NAVALIA_TIMEOUT || 5000);
+    jest.setTimeout(timeout);
+
+    this.chrome = new Chrome({ timeout });
     createdChromes.push(this.chrome);
     return this.chrome;
   }

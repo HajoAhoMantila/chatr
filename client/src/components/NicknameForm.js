@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import './NicknameForm.css';
 
 export default class NicknameForm extends Component {
   constructor(props) {

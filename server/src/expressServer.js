@@ -10,9 +10,6 @@ export default function createExpressServer() {
   const staticFiles = express.static(path.join(__dirname, '../../client/build'));
   app.use(staticFiles);
 
-  const jGivenReport = express.static(path.join(__dirname, '../../functional_tests/jGiven-report'));
-  app.use('/jgiven', jGivenReport);
-
   setupSocketIoServer(httpServer);
   return httpServer;
 }

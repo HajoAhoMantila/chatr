@@ -25,21 +25,27 @@ export default class ChatrApp extends Component {
   }
 
   setChatState(chat) {
-    this.setState({ nickname: chat.nickname, messages: chat.messages });
+    this.setState(() => ({ nickname: chat.nickname, messages: chat.messages }));
   }
 
   render() {
     return (
       <div className="App">
+
         <header className="App-header">
           <h1 className="App-title">chatr</h1>
           <div id="nickname">{this.state.nickname}</div>
         </header>
+
         {!this.state.nickname &&
         <NicknameForm setNicknameCallback={this.chat.setNickname} />
         }
+
         {this.state.nickname &&
-        <Chatroom sendMessageCallback={this.chat.sendMessage} messages={this.state.messages} />
+        <Chatroom
+          sendMessageCallback={this.chat.sendMessage}
+          messages={this.state.messages}
+        />
         }
       </div>
     );
