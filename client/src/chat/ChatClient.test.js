@@ -13,16 +13,24 @@ beforeEach(() => {
   client = new ChatClient(notifyCallback, socketIoClient);
 });
 
-test('Sets nickname and calls callback', () => {
-  client.setNickname('foo');
+test('When connecting sets nickname calls state update notification callback', () => {
+  client.connectWithNickname('foo');
 
   expect(notifyCallback).toBeCalledWith(client);
   expect(socketIoClient.connect).toBeCalled();
   expect(client.nickname).toBe('foo');
 });
 
+test('When connecting sets default room and adds it to room list', () => {
+  client.connectWithNickname('foo');
+
+  expect(client.currentRoom).toBe('Lobby');
+  expect(client.rooms).toContain('Lobby');
+});
+
+
 test('Sends message using remote client', () => {
-  client.setNickname('Alice');
+  client.connectWithNickname('Alice');
   client.sendMessage('foo');
 
   expect(socketIoClient.sendMessage).toBeCalledWith({ nickname: 'Alice', message: 'foo' });

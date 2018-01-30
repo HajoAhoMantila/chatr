@@ -56,8 +56,14 @@ export default class ThenChatApp extends Stage {
     return this;
   }
 
-  the_chat_room_is_visible() {
+  the_chat_room_$_is_visible(chatroomName) {
     this.expectElementExists('#chat-message-list');
+    this.expectElementContainsText('#chatroom-name', chatroomName);
+    return this;
+  }
+
+  the_chat_room_$_is_selected_in_the_list_of_chatrooms(chatroomName) {
+    this.expectElementContainsText('.roomname-selected', chatroomName);
     return this;
   }
 

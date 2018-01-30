@@ -4,17 +4,21 @@ export default class ChatClient {
   constructor(stateChangeCallback, remoteClient) {
     this.stateChangeCallback = stateChangeCallback;
     this.nickname = undefined;
+    this.currentRoom = undefined;
+    this.rooms = new List();
     this.messages = new List();
     this.remoteClient = remoteClient;
 
-    this.setNickname = this.setNickname.bind(this);
+    this.connectWithNickname = this.connectWithNickname.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.onReceiveChatMessage = this.onReceiveChatMessage.bind(this);
     this.onReceiveSystemMessage = this.onReceiveSystemMessage.bind(this);
   }
 
-  setNickname(nickname) {
+  connectWithNickname(nickname) {
     this.nickname = nickname;
+    this.currentRoom = 'Lobby';
+    this.rooms = new List(['Lobby']);
     this.remoteClient.connect(this);
     this.notify();
   }

@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import './ChatrApp.css';
 import NicknameForm from './components/NicknameForm';
 import Chatroom from './components/Chatroom';
+import ChatroomList from './components/ChatroomList';
 import ChatClient from './chat/ChatClient';
 import SocketIoClient from './chat/SocketIoClient';
 
@@ -10,14 +10,18 @@ export default class ChatrApp extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      nickname: undefined,
+      messages: undefined,
+      currentRoom: undefined,
+      rooms: undefined,
+    };
     this.setChatState = this.setChatState.bind(this);
-
-    this.state = { nickname: undefined, messages: undefined };
   }
 
   componentWillMount() {
-    this.io = this.props.remoteClient ? this.props.remoteClient : new SocketIoClient();
-    this.chat = this.props.chat ? this.props.chat : new ChatClient(this.setChatState, this.io);
+    this.io = new SocketIoClient();
+    this.chat = new ChatClient(this.setChatState, this.io);
   }
 
   componentWillUnmount() {
@@ -25,7 +29,12 @@ export default class ChatrApp extends Component {
   }
 
   setChatState(chat) {
-    this.setState(() => ({ nickname: chat.nickname, messages: chat.messages }));
+    this.setState(() => ({
+      nickname: chat.nickname,
+      messages: chat.messages,
+      currentRoom: chat.currentRoom,
+      rooms: chat.rooms,
+    }));
   }
 
   render() {
@@ -38,27 +47,24 @@ export default class ChatrApp extends Component {
         </header>
 
         {!this.state.nickname &&
-        <NicknameForm setNicknameCallback={this.chat.setNickname} />
+        <NicknameForm setNicknameCallback={this.chat.connectWithNickname} />
         }
 
         {this.state.nickname &&
-        <Chatroom
-          sendMessageCallback={this.chat.sendMessage}
-          messages={this.state.messages}
-        />
+        <div>
+          <ChatroomList
+            currentRoom={this.state.currentRoom}
+            roomNames={this.state.rooms}
+          />
+          <Chatroom
+            name={this.state.currentRoom}
+            sendMessageCallback={this.chat.sendMessage}
+            messages={this.state.messages}
+          />
+        </div>
         }
       </div>
     );
   }
 }
 
-// eslint: PropTypes.object is required to allow passing in a mock
-ChatrApp.propTypes = {
-  chat: PropTypes.instanceOf(ChatClient),
-  remoteClient: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-};
-
-ChatrApp.defaultProps = {
-  chat: undefined,
-  remoteClient: undefined,
-};

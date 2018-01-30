@@ -7,8 +7,20 @@ import Chatroom from './Chatroom';
 configure({ adapter: new Adapter() });
 
 describe('<Chatroom />', () => {
+  it('Should render the room name', () => {
+    const roomname = 'FooBarRoom';
+    const wrapper = shallow(<Chatroom
+      name={roomname}
+      sendMessageCallback={jest.fn()}
+      messages={new List()}
+    />);
+
+    expect(wrapper.find('#chatroom-name').text()).toEqual(roomname);
+  });
+
   it('Should render the chat log', () => {
     const wrapper = shallow(<Chatroom
+      name="Shiny"
       sendMessageCallback={jest.fn()}
       messages={new List([
         { nickname: 'Alice', message: 'Foo' },
@@ -24,6 +36,7 @@ describe('<Chatroom />', () => {
   it('Should call callback when new message is submitted', () => {
     const sendMessageCallback = jest.fn();
     const wrapper = mount(<Chatroom
+      name="Baz"
       sendMessageCallback={sendMessageCallback}
       messages={new List()}
     />);

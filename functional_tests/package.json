@@ -25,7 +25,7 @@
   "scripts": {
     "eslint-fix": "eslint --fix *.js",
     "pretest": "eslint *.js && jsgiven clean",
-    "test": "NAVALIA_TIMEOUT=20000 jest --runInBand || jsgiven report --fail",
+    "test": "jest --runInBand || jsgiven report --fail",
     "posttest": "jsgiven report"
   }
 }

@@ -13,6 +13,7 @@ scenarios(
   'Users can exchange chat messages',
   [GivenUser, WhenChatApp, ThenChatApp],
   ({ given, when, then }) => ({
+
     users_can_see_messages_of_other_users: scenario({}, () => {
       given().a_user_with_nickname_$_and_a_Chrome_Browser(userA)
         .and().a_user_with_nickname_$_and_a_Chrome_Browser(userB);
@@ -34,6 +35,7 @@ scenarios(
       then().user_$_can_see_the_chat_message_of_user_$(userB, userB);
     }),
   }),
+
 );
 
 afterEach(() => {

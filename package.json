@@ -24,7 +24,7 @@
     "start:prod": "cd server && yarn start:prod",
     "heroku-postbuild": "yarn build",
     "deploy:prod": "git push heroku master",
-    "test:prod": "(cd functional_tests; CHATR_URL='http://chatr.herokuapp.com/' NAVALIA_TIMEOUT='5000' yarn test)"
+    "test:prod": "(cd functional_tests; CHATR_URL='http://chatr.herokuapp.com/' NAVALIA_TIMEOUT='10000' yarn test)"
   },
   "engines": {
     "node": "8.9.4"

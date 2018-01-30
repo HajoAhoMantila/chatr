@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import './NicknameForm.css';
 
 export default class NicknameForm extends Component {
+  static propTypes = {
+    setNicknameCallback: PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.value = '';
@@ -31,8 +35,4 @@ export default class NicknameForm extends Component {
     );
   }
 }
-
-NicknameForm.propTypes = {
-  setNicknameCallback: PropTypes.func.isRequired,
-};
 

@@ -4,6 +4,12 @@ import { List } from 'immutable';
 import './Chatroom.css';
 
 export default class Chatroom extends Component {
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    messages: PropTypes.instanceOf(List).isRequired,
+    sendMessageCallback: PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.endOfListElement = undefined;
@@ -47,10 +53,16 @@ export default class Chatroom extends Component {
   render() {
     return (
       <div id="chatroom">
+        <div id="chatroom-name">{this.props.name}</div>
+
         <div id="chat-message-list">
           {this.chatMessageListItems()}
-          <div ref={(element) => { this.endOfListElement = element; }} />
+          <div ref={(element) => {
+            this.endOfListElement = element;
+          }}
+          />
         </div>
+
         <form onSubmit={this.handleMessageSubmit}>
           <input
             id="message-input-text"
@@ -63,9 +75,4 @@ export default class Chatroom extends Component {
     );
   }
 }
-
-Chatroom.propTypes = {
-  messages: PropTypes.instanceOf(List).isRequired,
-  sendMessageCallback: PropTypes.func.isRequired,
-};
 
