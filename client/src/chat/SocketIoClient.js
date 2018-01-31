@@ -9,7 +9,8 @@ export default class SocketIoClient {
 
   connect(chat) {
     this.chat = chat;
-    this.socket = this.url ? io(this.url) : io();
+    const data = { query: { nickname: chat.nickname } };
+    this.socket = this.url ? io(this.url, data) : io(data);
     this.initializeSocket();
   }
 
@@ -18,6 +19,9 @@ export default class SocketIoClient {
       this.chat.onReceiveChatMessage(messageData);
     });
 
+    this.socket.on(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, (messageData) => {
+      this.chat.onReceiveSystemMessage(messageData);
+    });
     this.socket.on(ClientEvent.ERROR, (error) => {
       this.error(`Error: ${error}`);
     });
@@ -36,7 +40,7 @@ export default class SocketIoClient {
   }
 
   error(errorMessage) {
-    this.chat.onReceiveSystemMessage(errorMessage);
+    this.chat.onReceiveSystemMessage({ message: errorMessage });
   }
 
   close() {

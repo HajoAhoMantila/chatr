@@ -45,7 +45,7 @@ test('Adds received chat message to message list', () => {
 });
 
 test('Adds received system message to message list', () => {
-  client.onReceiveSystemMessage('errormessage');
+  client.onReceiveSystemMessage({ message: 'errormessage' });
 
   expect(notifyCallback).toBeCalledWith(client);
   const expectedMessageData = { nickname: 'System', message: 'errormessage' };

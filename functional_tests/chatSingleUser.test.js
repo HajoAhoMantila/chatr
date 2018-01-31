@@ -31,7 +31,7 @@ scenarios(
         .and()
         .the_user_sends_a_chat_message();
 
-      then().the_chat_message_is_displayed_in_the_chat_room();
+      then().the_user_can_see_the_message_in_the_chat_room();
     }),
 
   }),

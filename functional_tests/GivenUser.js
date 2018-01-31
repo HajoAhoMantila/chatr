@@ -7,6 +7,7 @@ let createdChromes = [];
 class GivenUser extends Stage {
   @State chrome;
   @State chromes = new Map();
+  @State nickname = 'Alice';
 
   createNewChromeAndSetAsCurrent() {
     const timeout = (process.env.NAVALIA_TIMEOUT || 5000);
@@ -24,8 +25,7 @@ class GivenUser extends Stage {
   }
 
   a_user_with_a_Chrome_browser() {
-    this.createNewChromeAndSetAsCurrent();
-    return this;
+    return this.a_user_with_nickname_$_and_a_Chrome_Browser(this.nickname);
   }
 }
 

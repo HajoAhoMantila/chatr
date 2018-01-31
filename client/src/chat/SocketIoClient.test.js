@@ -29,6 +29,22 @@ describe('Socket.io client/server integration tests - happy path', () => {
     done();
   });
 
+  test('Socket.io client connects and receives join message', (done) => {
+    ChatClient.mockImplementation(() => ({
+      get nickname() {
+        return 'Alice';
+      },
+
+      onReceiveSystemMessage: (message) => {
+        expect(message).toEqual({ message: 'User Alice joined' });
+        done();
+      },
+    }));
+
+    ioClient = new SocketIoClient(url);
+    ioClient.connect(new ChatClient());
+  });
+
   test('Socket.io client sends and receives message', (done) => {
     const testMessage = { foobar: 'foobar' };
     ChatClient.mockImplementation(() => ({
@@ -52,8 +68,8 @@ describe('Socket.io client/server integration tests - error scenarios', () => {
 
   test('Socket.io yields error message if server down', (done) => {
     ChatClient.mockImplementation(() => ({
-      onReceiveSystemMessage: (message) => {
-        expect(message).toContain('Error connecting to server');
+      onReceiveSystemMessage: (messageData) => {
+        expect(messageData.message).toContain('Error connecting to server');
         done();
       },
     }));

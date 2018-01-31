@@ -5,7 +5,6 @@ export default class ThenChatApp extends Stage {
   @State chrome;
   @State chromes;
   @State nickname;
-  @State message;
   @State messages;
 
   setChromeForUser(nickname) {
@@ -67,9 +66,8 @@ export default class ThenChatApp extends Stage {
     return this;
   }
 
-  the_chat_message_is_displayed_in_the_chat_room() {
-    const expectedMessage = ThenChatApp.buildExpectedMessage(this.nickname, this.message);
-    this.expectElementHasText('.message', expectedMessage);
+  the_user_can_see_the_message_in_the_chat_room() {
+    this.user_$_can_see_the_chat_message_of_user_$(this.nickname, this.nickname);
     return this;
   }
 

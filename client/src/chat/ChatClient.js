@@ -34,7 +34,7 @@ export default class ChatClient {
   }
 
   onReceiveSystemMessage(messageData) {
-    this.messages = this.messages.push({ nickname: 'System', message: messageData });
+    this.messages = this.messages.push({ nickname: 'System', ...messageData });
     this.notify();
   }
 
