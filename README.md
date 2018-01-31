@@ -18,6 +18,11 @@ https://s3.eu-central-1.amazonaws.com/chatr-artifacts/index.html
 
 * The setup scripts for the dev environment assume nvm (Node Version Manager https://github.com/creationix/nvm) is available.
 * A current version of Chrome is required for the functional tests 
+
+### Note for Windows users
+
+The directory client/src/chat/shared is a symlink to server/src/shared. When checking out the repository
+on a Windows machine the link will most likely not be set up correctly.  
  
 ### Development environment setup
 

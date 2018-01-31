@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import { ClientEvent, ChatEvent } from './shared/eventTypes';
 
 export default class SocketIoClient {
   constructor(url = undefined) {
@@ -13,25 +14,25 @@ export default class SocketIoClient {
   }
 
   initializeSocket() {
-    this.socket.on('messageFromServer', (messageData) => {
+    this.socket.on(ChatEvent.MESSAGE_FROM_SERVER, (messageData) => {
       this.chat.onReceiveChatMessage(messageData);
     });
 
-    this.socket.on('error', (error) => {
+    this.socket.on(ClientEvent.ERROR, (error) => {
       this.error(`Error: ${error}`);
     });
 
-    this.socket.on('connect_timeout', (timeout) => {
+    this.socket.on(ClientEvent.CONNECT_TIMEOUT, (timeout) => {
       this.error(`Connection timeout after ${timeout}ms`);
     });
 
-    this.socket.on('connect_error', (error) => {
+    this.socket.on(ClientEvent.CONNECT_ERROR, (error) => {
       this.error(`Error connecting to server: ${error}`);
     });
   }
 
   sendMessage(messageData) {
-    this.socket.emit('messageFromClient', messageData);
+    this.socket.emit(ChatEvent.MESSAGE_FROM_CLIENT, messageData);
   }
 
   error(errorMessage) {

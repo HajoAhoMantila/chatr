@@ -1,8 +1,7 @@
-import createExpressServer from './expressServer';
+import ExpressServer from './ExpressServer';
 
-const server = createExpressServer();
 const port = (process.env.PORT || 3001);
 
-server.listen(port, () => {
-  console.log(`Listening on *:${port}`);
-});
+const server = new ExpressServer(port);
+server.start();
+

@@ -24,7 +24,7 @@
   },
   "scripts": {
     "eslint-fix": "eslint --fix *.js",
-    "pretest": "eslint *.js && jsgiven clean",
+    "pretest": "eslint --fix *.js && jsgiven clean",
     "test": "jest --runInBand || jsgiven report --fail",
     "posttest": "jsgiven report"
   }

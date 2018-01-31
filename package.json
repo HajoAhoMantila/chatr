@@ -15,7 +15,7 @@
   "scripts": {
     "install": "(cd client && yarn) && (cd server && yarn) && (cd functional_tests && yarn)",
     "start": "concurrently \"cd client && PORT=3000 yarn start\" \"cd server && PORT=3001 yarn start\"",
-    "test-client": "(yarn start &) && (cd client && CI=true yarn test)",
+    "test-client": "(cd client && CI=true yarn test)",
     "test-server": "(cd server; yarn test)",
     "test-functional": "(cd functional_tests && yarn test)",
     "test": "yarn test-server && yarn test-client && yarn test-functional",
