@@ -52,6 +52,7 @@ describe('Socket.io client/server integration tests - happy path', () => {
         expect(message).toEqual(testMessage);
         done();
       },
+      onReceiveSystemMessage: () => {},
     }));
     ioClient = new SocketIoClient(url);
     ioClient.connect(new ChatClient());
