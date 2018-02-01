@@ -31,7 +31,7 @@ export default class Chatroom extends Component {
   }
 
   handleMessageSubmit(event) {
-    this.props.sendMessageCallback(this.message);
+    this.props.sendMessageCallback(this.message, this.props.name);
     event.preventDefault();
   }
 

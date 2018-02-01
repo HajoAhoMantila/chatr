@@ -13,6 +13,7 @@ export default class ChatClient {
 
     this.connectWithNickname = this.connectWithNickname.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    this.addAndJoinRoom = this.addAndJoinRoom.bind(this);
     this.onReceiveChatMessage = this.onReceiveChatMessage.bind(this);
     this.onReceiveSystemMessage = this.onReceiveSystemMessage.bind(this);
   }
@@ -43,7 +44,14 @@ export default class ChatClient {
   }
 
   sendMessage(message) {
-    this.remoteClient.sendMessage(message);
+    this.remoteClient.sendMessageInRoom(message, this.currentRoom);
+    this.notify();
+  }
+
+  addAndJoinRoom(room) {
+    this.addRoomIfNotYetKnown(room);
+    this.currentRoom = room;
+    this.remoteClient.joinRoom(room);
     this.notify();
   }
 

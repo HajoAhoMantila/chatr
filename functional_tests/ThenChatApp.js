@@ -6,6 +6,7 @@ export default class ThenChatApp extends Stage {
   @State chromes;
   @State nickname;
   @State messages;
+  @State room;
 
   setChromeForUser(nickname) {
     expect(this.chromes.has(nickname)).toBeTruthy();
@@ -75,6 +76,12 @@ export default class ThenChatApp extends Stage {
     this.setChromeForUser(receiver);
     const expectedMessage = ThenChatApp.buildExpectedMessage(sender, this.messages.get(sender));
     this.expectElementHasText(`[id^=${sender}]`, expectedMessage);
+    return this;
+  }
+
+  a_system_message_is_shown_announcing_the_user_joined_the_room() {
+    const expectedMessage = ThenChatApp.buildExpectedMessage('System', `${this.nickname} joined room ${this.room}`);
+    this.expectElementHasText(`[id^=${'System'}]`, expectedMessage);
     return this;
   }
 

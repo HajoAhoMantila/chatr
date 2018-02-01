@@ -9,6 +9,7 @@ export default class WhenChatApp extends Stage {
   @State chromes;
   @State nickname;
   @State messages = new Map();
+  @State room;
 
   setChromeForUser(nickname) {
     expect(this.chromes.has(nickname)).toBeTruthy();
@@ -57,6 +58,15 @@ export default class WhenChatApp extends Stage {
       await this.chrome.type('#message-input-text', '\r');
     });
     this.messages.set(this.nickname, message);
+    return this;
+  }
+
+  the_user_enters_the_new_chat_room_name(room) {
+    doAsync(async () => {
+      await this.chrome.type('#newchatroom-input-text', room);
+      await this.chrome.type('#newchatroom-input-text', '\r');
+    });
+    this.room = room;
     return this;
   }
 }

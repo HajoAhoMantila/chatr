@@ -7,7 +7,19 @@ export default class ChatroomList extends Component {
   static propTypes = {
     currentRoom: PropTypes.string.isRequired,
     roomNames: PropTypes.instanceOf(List).isRequired,
+    createRoomCallback: PropTypes.func.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+
+    this.handleNewChatRoomSubmit = this.handleNewChatRoomSubmit.bind(this);
+  }
+
+  handleNewChatRoomSubmit(event) {
+    this.props.createRoomCallback(this.newChatRoomInput.value);
+    event.preventDefault();
+  }
 
   chatroomListItems() {
     const { roomNames, currentRoom } = this.props;
@@ -28,6 +40,15 @@ export default class ChatroomList extends Component {
     return (
       <div id="chatroom-list">
         {this.chatroomListItems()}
+
+        <form onSubmit={this.handleNewChatRoomSubmit}>
+          <input
+            id="newchatroom-input-text"
+            type="text"
+            ref={(ref) => { this.newChatRoomInput = ref; }}
+          />
+          <input id="newchatroom-input-submit" type="submit" value="Submit" />
+        </form>
       </div>
     );
   }

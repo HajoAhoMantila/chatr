@@ -34,16 +34,18 @@ describe('<Chatroom />', () => {
   });
 
   it('Should call callback when new message is submitted', () => {
+    const room = 'RoomName';
+    const message = 'Testmessage';
     const sendMessageCallback = jest.fn();
     const wrapper = mount(<Chatroom
-      name="Baz"
+      name={room}
       sendMessageCallback={sendMessageCallback}
       messages={new List()}
     />);
 
-    wrapper.find('#message-input-text').simulate('change', { target: { value: 'testmessage' } });
+    wrapper.find('#message-input-text').simulate('change', { target: { value: message } });
     wrapper.find('#message-input-text').simulate('submit');
 
-    expect(sendMessageCallback).toBeCalledWith('testmessage');
+    expect(sendMessageCallback).toBeCalledWith(message, room);
   });
 });

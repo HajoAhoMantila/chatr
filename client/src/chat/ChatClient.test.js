@@ -49,7 +49,7 @@ test('Sends message using remote client', () => {
   client.connectWithNickname('Alice');
   client.sendMessage('foo');
 
-  expect(socketIoClient.sendMessage).toBeCalledWith('foo');
+  expect(socketIoClient.sendMessageInRoom).toBeCalledWith('foo', client.currentRoom);
 });
 
 test('Adds received chat message for default room to message list', () => {
@@ -92,3 +92,14 @@ test('When receiving first chat message in room: adds room, saves message and no
   expect(client.messages[room]).toContainEqual({ nickname, message, room });
   expect(notificationCallback).toBeCalledWith(client);
 });
+
+test('Adds and joins room using remote client', () => {
+  const room = 'Ballroom';
+  client.addAndJoinRoom(room);
+
+  expect(client.rooms).toContainEqual(room);
+  expect(client.currentRoom).toEqual(room);
+  expect(socketIoClient.joinRoom).toBeCalledWith(room);
+  expect(notificationCallback).toBeCalledWith(client);
+});
+
