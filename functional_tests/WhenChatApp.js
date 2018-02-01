@@ -8,7 +8,6 @@ export default class WhenChatApp extends Stage {
   @State chrome;
   @State chromes;
   @State nickname;
-  @State message;
   @State messages = new Map();
 
   setChromeForUser(nickname) {
@@ -17,10 +16,7 @@ export default class WhenChatApp extends Stage {
   }
 
   the_user_opens_the_app() {
-    doAsync(async () => {
-      await this.chrome.goto(hostname);
-    });
-    return this;
+    return this.the_user_$_opens_the_app(this.nickname);
   }
 
   the_user_$_opens_the_app(nickname) {
@@ -40,27 +36,27 @@ export default class WhenChatApp extends Stage {
   }
 
   the_user_enters_a_nickname() {
-    this.nickname = generate(8);
     return this.the_user_enters_the_nickname(this.nickname);
   }
 
   the_user_$_sends_a_chat_message(nickname) {
     this.setChromeForUser(nickname);
-    this.message = nickname + generate(32);
+    const message = nickname + generate(32);
     doAsync(async () => {
-      await this.chrome.type('#message-input-text', this.message);
+      await this.chrome.type('#message-input-text', message);
       await this.chrome.type('#message-input-text', '\r');
     });
-    this.messages.set(nickname, this.message);
+    this.messages.set(nickname, message);
     return this;
   }
 
   the_user_sends_a_chat_message() {
-    this.message = generate(32);
+    const message = this.nickname + generate(32);
     doAsync(async () => {
-      await this.chrome.type('#message-input-text', this.message);
+      await this.chrome.type('#message-input-text', message);
       await this.chrome.type('#message-input-text', '\r');
     });
+    this.messages.set(this.nickname, message);
     return this;
   }
 }
