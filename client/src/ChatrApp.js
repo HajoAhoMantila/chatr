@@ -31,7 +31,7 @@ export default class ChatrApp extends Component {
   setChatState(chat) {
     this.setState(() => ({
       nickname: chat.nickname,
-      messages: chat.messages,
+      messages: chat.getMessagesForCurrentRoom(),
       currentRoom: chat.currentRoom,
       rooms: chat.rooms,
     }));

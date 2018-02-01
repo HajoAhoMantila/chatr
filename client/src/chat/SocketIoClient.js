@@ -35,8 +35,19 @@ export default class SocketIoClient {
     });
   }
 
-  sendMessage(messageData) {
-    this.socket.emit(ChatEvent.MESSAGE_FROM_CLIENT, messageData);
+  joinRoom(room) {
+    this.socket.emit(ChatEvent.JOIN_ROOM, { nickname: this.chat.nickname, room });
+  }
+
+  sendMessage(message) {
+    this.socket.emit(ChatEvent.MESSAGE_FROM_CLIENT, { nickname: this.chat.nickname, message });
+  }
+
+  sendMessageInRoom(message, room) {
+    this.socket.emit(
+      ChatEvent.MESSAGE_FROM_CLIENT,
+      { room, nickname: this.chat.nickname, message },
+    );
   }
 
   error(errorMessage) {

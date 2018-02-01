@@ -1,6 +1,7 @@
-/* eslint-disable no-unused-vars,max-len */
+/* -disable no-unused-vars,max-len */
 import express from 'express';
 import http from 'http';
+import deepEqual from 'deep-equal';
 import ChatClient from './ChatClient';
 import SocketIoClient from './SocketIoClient';
 import SocketIoServer from '../../../server/src/SocketIoServer';
@@ -19,6 +20,8 @@ describe('Socket.io client/server integration tests - happy path', () => {
     ioServer = new SocketIoServer(server);
     ioServer.start();
     server.listen(testPort);
+
+    ioClient = new SocketIoClient(url);
     done();
   });
 
@@ -30,34 +33,81 @@ describe('Socket.io client/server integration tests - happy path', () => {
   });
 
   test('Socket.io client connects and receives join message', (done) => {
+    const nickname = 'Alice';
     ChatClient.mockImplementation(() => ({
       get nickname() {
-        return 'Alice';
+        return nickname;
       },
 
       onReceiveSystemMessage: (message) => {
-        expect(message).toEqual({ message: 'User Alice joined' });
+        expect(message).toEqual({ message: `User ${nickname} joined` });
         done();
       },
     }));
 
-    ioClient = new SocketIoClient(url);
     ioClient.connect(new ChatClient());
   });
 
-  test('Socket.io client sends and receives message', (done) => {
-    const testMessage = { foobar: 'foobar' };
+  test('Socket.io client can send and receives message to default room', (done) => {
+    const nickname = 'Alice';
+    const message = 'foobar';
+
     ChatClient.mockImplementation(() => ({
-      onReceiveChatMessage: (message) => {
-        expect(message).toEqual(testMessage);
+      get nickname() {
+        return nickname;
+      },
+      onReceiveChatMessage: (receivedMessage) => {
+        expect(receivedMessage).toEqual({ nickname, message });
         done();
       },
-      onReceiveSystemMessage: () => {},
+      onReceiveSystemMessage: () => {
+      },
     }));
-    ioClient = new SocketIoClient(url);
-    ioClient.connect(new ChatClient());
 
-    ioClient.sendMessage(testMessage);
+    ioClient.connect(new ChatClient());
+    ioClient.sendMessage(message);
+  });
+
+  test('Socket.io client can join room', (done) => {
+    const room = 'Kitchen';
+    const nickname = 'Alice';
+
+    ChatClient.mockImplementation(() => ({
+      get nickname() {
+        return nickname;
+      },
+      onReceiveSystemMessage: (message) => {
+        if (deepEqual(message, { room, message: `${nickname} joined room ${room}` })) {
+          done();
+        }
+      },
+    }));
+
+    ioClient.connect(new ChatClient());
+    ioClient.joinRoom('Kitchen');
+  });
+
+  test('Socket.io client can send and receive message in room', (done) => {
+    const nickname = 'Alice';
+    const room = 'Python';
+    const message = 'Explicit is better than implicit';
+
+    ChatClient.mockImplementation(() => ({
+      get nickname() {
+        return nickname;
+      },
+      onReceiveChatMessage: (receivedMessage) => {
+        if (deepEqual(receivedMessage, { message, nickname, room })) {
+          done();
+        }
+      },
+      onReceiveSystemMessage: () => {
+      },
+    }));
+
+    ioClient.connect(new ChatClient());
+    ioClient.joinRoom(room);
+    ioClient.sendMessageInRoom(message, room);
   });
 });
 
