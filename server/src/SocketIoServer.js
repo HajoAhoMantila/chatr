@@ -57,7 +57,7 @@ export default class SocketIoServer {
   }
 
   static broadcastSystemMessage(socket, message) {
-    socket.broadcast.emit(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, message);
+    socket.broadcast.emit(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, { message });
     socket.emit(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, { message });
   }
 }

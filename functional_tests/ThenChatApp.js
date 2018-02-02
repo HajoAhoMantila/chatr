@@ -56,9 +56,19 @@ export default class ThenChatApp extends Stage {
     return this;
   }
 
-  the_chat_room_$_is_visible(chatroomName) {
+  the_chat_room_$_is_visible(room) {
+    return this.the_chat_room_$_is_visible_for_user(room, this.nickname);
+  }
+
+  the_chat_room_$_is_visible_for_user(room, nickname) {
+    this.setChromeForUser(nickname);
     this.expectElementExists('#chat-message-list');
-    this.expectElementContainsText('#chatroom-name', chatroomName);
+    this.expectElementContainsText('#chatroom-name', room);
+    return this;
+  }
+
+  the_chat_room_$_is_not_selected_in_the_list_of_chatrooms(chatroomName) {
+    this.expectElementContainsText('.roomname', chatroomName);
     return this;
   }
 

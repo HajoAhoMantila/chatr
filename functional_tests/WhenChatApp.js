@@ -62,6 +62,11 @@ export default class WhenChatApp extends Stage {
   }
 
   the_user_enters_the_new_chat_room_name(room) {
+    return this.user_$_enters_the_new_chat_room_name(this.nickname, room);
+  }
+
+  user_$_enters_the_new_chat_room_name(nickname, room) {
+    this.setChromeForUser(nickname);
     doAsync(async () => {
       await this.chrome.type('#newchatroom-input-text', room);
       await this.chrome.type('#newchatroom-input-text', '\r');
