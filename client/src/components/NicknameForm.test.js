@@ -9,7 +9,7 @@ test('Calls callback when nickname is submitted', () => {
   const setNickname = jest.fn();
   const nicknameForm = mount(<NicknameForm setNicknameCallback={setNickname} />);
 
-  nicknameForm.find('#nickname-input-text').simulate('change', { target: { value: 'username' } });
+  nicknameForm.find('#nickname-input-text').instance().value = 'username';
   nicknameForm.find('#nickname-input').simulate('submit');
 
   expect(setNickname).toBeCalledWith('username');

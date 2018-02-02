@@ -13,7 +13,7 @@ export default class Chatroom extends Component {
   constructor(props) {
     super(props);
     this.endOfListElement = undefined;
-    this.handleMessageChange = this.handleMessageChange.bind(this);
+    this.messageInput = undefined;
     this.handleMessageSubmit = this.handleMessageSubmit.bind(this);
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
   }
@@ -26,12 +26,9 @@ export default class Chatroom extends Component {
     this.endOfListElement.scrollIntoView({ behavior: 'smooth' });
   }
 
-  handleMessageChange(event) {
-    this.message = event.target.value;
-  }
-
   handleMessageSubmit(event) {
-    this.props.sendMessageCallback(this.message, this.props.name);
+    this.props.sendMessageCallback(this.messageInput.value, this.props.name);
+    this.messageInput.value = '';
     event.preventDefault();
   }
 
@@ -57,19 +54,17 @@ export default class Chatroom extends Component {
 
         <div id="chat-message-list">
           {this.chatMessageListItems()}
-          <div ref={(element) => {
-            this.endOfListElement = element;
-          }}
-          />
+          <div ref={(element) => { this.endOfListElement = element; }} />
         </div>
 
         <form onSubmit={this.handleMessageSubmit}>
           <input
             id="message-input-text"
             type="text"
-            onChange={this.handleMessageChange}
+            ref={(ref) => { this.messageInput = ref; }}
+            placeholder="Enter a chat message..."
           />
-          <input id="message-input-submit" type="submit" value="Submit" />
+          <input id="message-input-submit" type="submit" value="Send" />
         </form>
       </div>
     );

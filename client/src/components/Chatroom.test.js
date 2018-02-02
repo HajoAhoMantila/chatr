@@ -33,7 +33,7 @@ describe('<Chatroom />', () => {
     expect(wrapper.find('.message').at(1).text()).toBe('Bob:Bar');
   });
 
-  it('Should call callback when new message is submitted', () => {
+  it('Should clear input and call callback when new message is submitted', () => {
     const room = 'RoomName';
     const message = 'Testmessage';
     const sendMessageCallback = jest.fn();
@@ -43,9 +43,11 @@ describe('<Chatroom />', () => {
       messages={new List()}
     />);
 
-    wrapper.find('#message-input-text').simulate('change', { target: { value: message } });
+    // wrapper.find('#message-input-text').simulate('change', { target: { value: message } });
+    wrapper.find('#message-input-text').instance().value = message;
     wrapper.find('#message-input-text').simulate('submit');
 
+    expect(wrapper.find('#message-input-text').instance().value).toEqual('');
     expect(sendMessageCallback).toBeCalledWith(message, room);
   });
 });
