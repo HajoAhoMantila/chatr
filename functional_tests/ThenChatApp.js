@@ -82,6 +82,11 @@ export default class ThenChatApp extends Stage {
     return this;
   }
 
+  the_user_can_see_the_message(message) {
+    this.expectElementHasText('.message', ThenChatApp.buildExpectedMessage(this.nickname, message));
+    return this;
+  }
+
   user_$_can_see_the_chat_message_of_user_$(receiver, sender) {
     this.setChromeForUser(receiver);
     const expectedMessage = ThenChatApp.buildExpectedMessage(sender, this.messages.get(sender));

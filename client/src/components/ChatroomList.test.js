@@ -8,11 +8,11 @@ configure({ adapter: new Adapter() });
 
 describe('<ChatroomList />', () => {
   it('Renders the chat room list', () => {
-    const createAndJoinRoomCallback = jest.fn();
     const wrapper = shallow(<ChatroomList
       currentRoom="Kitchen"
       roomNames={new List(['LivingRoom', 'Kitchen', 'Bathroom'])}
-      createRoomCallback={createAndJoinRoomCallback}
+      createRoomCallback={jest.fn()}
+      selectRoomCallback={jest.fn()}
     />);
 
     expect(wrapper.find('.roomname-selected')).toHaveLength(1);
@@ -28,6 +28,7 @@ describe('<ChatroomList />', () => {
       currentRoom="LivingRoom"
       roomNames={new List(['LivingRoom', 'Kitchen', 'Bathroom'])}
       createRoomCallback={createAndJoinRoomCallback}
+      selectRoomCallback={jest.fn()}
     />);
 
     const newRoomName = 'ShinyNewRoom';
@@ -36,5 +37,18 @@ describe('<ChatroomList />', () => {
 
     expect(wrapper.find('#newchatroom-input-text').instance().value).toEqual('');
     expect(createAndJoinRoomCallback).toBeCalledWith(newRoomName);
+  });
+
+  it('Calls callback when room name is clicked', () => {
+    const selectRoomCallback = jest.fn();
+    const wrapper = mount(<ChatroomList
+      currentRoom="LivingRoom"
+      roomNames={new List(['LivingRoom', 'Kitchen', 'Bathroom'])}
+      createRoomCallback={jest.fn()}
+      selectRoomCallback={selectRoomCallback}
+    />);
+
+    wrapper.find('#room-Kitchen').simulate('click');
+    expect(selectRoomCallback).toBeCalledWith('Kitchen');
   });
 });

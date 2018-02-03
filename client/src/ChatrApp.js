@@ -56,6 +56,7 @@ export default class ChatrApp extends Component {
             currentRoom={this.state.currentRoom}
             roomNames={this.state.rooms}
             createRoomCallback={this.chat.addAndJoinRoom}
+            selectRoomCallback={this.chat.selectRoom}
           />
           <Chatroom
             name={this.state.currentRoom}

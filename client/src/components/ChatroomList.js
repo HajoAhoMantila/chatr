@@ -8,18 +8,25 @@ export default class ChatroomList extends Component {
     currentRoom: PropTypes.string.isRequired,
     roomNames: PropTypes.instanceOf(List).isRequired,
     createRoomCallback: PropTypes.func.isRequired,
+    selectRoomCallback: PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
     this.newChatRoomInput = undefined;
     this.handleNewChatRoomSubmit = this.handleNewChatRoomSubmit.bind(this);
+    this.handleClickRoomName = this.handleClickRoomName.bind(this);
   }
 
   handleNewChatRoomSubmit(event) {
+    event.preventDefault();
     this.props.createRoomCallback(this.newChatRoomInput.value);
     this.newChatRoomInput.value = '';
+  }
+
+  handleClickRoomName(event, roomName) {
     event.preventDefault();
+    this.props.selectRoomCallback(roomName);
   }
 
   chatroomListItems() {
@@ -27,9 +34,14 @@ export default class ChatroomList extends Component {
     const getRoomNameClass = roomName => (roomName === currentRoom ? 'roomname-selected' : 'roomname');
 
     return roomNames.map(roomName => (
-      <div id={roomName} key={roomName} className={getRoomNameClass(roomName)}>
+      <button
+        id={`room-${roomName}`}
+        key={roomName}
+        className={getRoomNameClass(roomName)}
+        onClick={e => this.handleClickRoomName(e, roomName)}
+      >
         {roomName}
-      </div>
+      </button>
     ));
   }
 
@@ -42,7 +54,9 @@ export default class ChatroomList extends Component {
           <input
             id="newchatroom-input-text"
             type="text"
-            ref={(ref) => { this.newChatRoomInput = ref; }}
+            ref={(ref) => {
+              this.newChatRoomInput = ref;
+            }}
             placeholder="Enter a room name"
           />
           <input id="newchatroom-input-submit" type="submit" value="Join" />

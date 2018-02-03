@@ -21,7 +21,7 @@ scenarios(
         .and()
         .the_user_enters_a_nickname()
         .and()
-        .the_user_enters_the_new_chat_room_name('Munich');
+        .the_user_joins_the_chat_room('Munich');
 
       then().the_chat_room_$_is_visible('Munich')
         .and()
@@ -46,9 +46,9 @@ scenarios(
         .and()
         .the_user_enters_the_nickname(userB)
         .and()
-        .user_$_enters_the_new_chat_room_name(userA, newRoomName)
+        .user_$_joins_the_chat_room(userA, newRoomName)
         .and()
-        .user_$_enters_the_new_chat_room_name(userB, newRoomName);
+        .user_$_joins_the_chat_room(userB, newRoomName);
 
       then()
         .the_chat_room_$_is_visible_for_user(newRoomName, userA)
@@ -64,6 +64,34 @@ scenarios(
       then().user_$_can_see_the_chat_message_of_user_$(userB, userB);
     }),
 
+    users_can_switch_between_chat_rooms_and_no_messages_are_lost: scenario({}, () => {
+      const roomA = 'Firefly';
+      const roomB = 'Serenity';
+      const messageA = 'Shiny!';
+      const messageB = 'I swallowed a bug.';
+
+      given().a_user_with_a_Chrome_browser();
+
+      when().the_user_opens_the_app()
+        .and()
+        .the_user_enters_a_nickname()
+        .and()
+        .the_user_joins_the_chat_room(roomA)
+        .and()
+        .the_user_sends_the_chat_message(messageA)
+        .and()
+        .the_user_joins_the_chat_room(roomB)
+        .and()
+        .the_user_sends_the_chat_message(messageB)
+        .and()
+        .the_user_switches_to_chat_room(roomA);
+
+      then().the_user_can_see_the_message(messageA);
+
+      when().the_user_switches_to_chat_room(roomB);
+
+      then().the_user_can_see_the_message(messageB);
+    }),
   }),
 );
 

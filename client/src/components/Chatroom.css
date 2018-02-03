@@ -8,6 +8,13 @@
   overflow: auto;
 }
 
+.system-message {
+  width: 300px;
+  font-style: italic;
+  color: DarkGray;
+  overflow: hidden; /* will contain if #first is longer than #second */
+}
+
 .message {
   width: 300px;
   overflow: hidden; /* will contain if #first is longer than #second */

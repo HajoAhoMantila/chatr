@@ -3,6 +3,7 @@ import Adapter from 'enzyme-adapter-react-16/build/index';
 import { configure, shallow, mount } from 'enzyme';
 import React from 'react';
 import Chatroom from './Chatroom';
+import { MessageType } from '../chat/ChatClient';
 
 configure({ adapter: new Adapter() });
 
@@ -32,6 +33,20 @@ describe('<Chatroom />', () => {
     expect(wrapper.find('.message').at(0).text()).toBe('Alice:Foo');
     expect(wrapper.find('.message').at(1).text()).toBe('Bob:Bar');
   });
+
+  it('Should render system messages', () => {
+    const wrapper = shallow(<Chatroom
+      name="Shiny"
+      sendMessageCallback={jest.fn()}
+      messages={new List([
+        { type: MessageType.SYSTEM_MESSAGE, message: 'Uh-oh' },
+      ])}
+    />);
+
+    expect(wrapper.find('.system-message')).toHaveLength(1);
+    expect(wrapper.find('.system-message').at(0).text()).toBe('Uh-oh');
+  });
+
 
   it('Should clear input and call callback when new message is submitted', () => {
     const room = 'RoomName';

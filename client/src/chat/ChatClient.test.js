@@ -1,4 +1,4 @@
-import ChatClient, { defaultRoom } from './ChatClient';
+import ChatClient, { defaultRoom, MessageType } from './ChatClient';
 import SocketIoClient from './SocketIoClient';
 
 jest.mock('./SocketIoClient');
@@ -67,7 +67,7 @@ test('Adds received system message for default room to message list', () => {
   client.onReceiveSystemMessage({ message: 'errormessage' });
 
   expect(notificationCallback).toBeCalledWith(client);
-  const expectedMessageData = { nickname: 'System', message: 'errormessage' };
+  const expectedMessageData = { nickname: 'System', type: MessageType.SYSTEM_MESSAGE, message: 'errormessage' };
   expect(client.messages[defaultRoom]).toContainEqual(expectedMessageData);
 });
 
@@ -78,7 +78,9 @@ test('When receiving first system message in room: adds room, saves message and 
   client.onReceiveSystemMessage({ message, room });
 
   expect(client.rooms).toContain(room);
-  expect(client.messages[room]).toContainEqual({ nickname: 'System', message, room });
+  expect(client.messages[room]).toContainEqual({
+    nickname: 'System', type: MessageType.SYSTEM_MESSAGE, message, room,
+  });
   expect(notificationCallback).toBeCalledWith(client);
 });
 
@@ -100,6 +102,14 @@ test('Adds and joins room using remote client', () => {
   expect(client.rooms).toContainEqual(room);
   expect(client.currentRoom).toEqual(room);
   expect(socketIoClient.joinRoom).toBeCalledWith(room);
+  expect(notificationCallback).toBeCalledWith(client);
+});
+
+test('Updates room and notifies when changing room', () => {
+  const room = 'Ballroom';
+  client.selectRoom(room);
+
+  expect(client.currentRoom).toEqual(room);
   expect(notificationCallback).toBeCalledWith(client);
 });
 

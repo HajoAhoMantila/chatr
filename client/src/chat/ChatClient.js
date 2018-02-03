@@ -2,6 +2,10 @@ import { List } from 'immutable';
 
 export const defaultRoom = 'Lobby';
 
+export const MessageType = Object.freeze({
+  SYSTEM_MESSAGE: 'System',
+});
+
 export default class ChatClient {
   constructor(stateChangeCallback, remoteClient) {
     this.stateChangeCallback = stateChangeCallback;
@@ -14,6 +18,7 @@ export default class ChatClient {
     this.connectWithNickname = this.connectWithNickname.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.addAndJoinRoom = this.addAndJoinRoom.bind(this);
+    this.selectRoom = this.selectRoom.bind(this);
     this.onReceiveChatMessage = this.onReceiveChatMessage.bind(this);
     this.onReceiveSystemMessage = this.onReceiveSystemMessage.bind(this);
   }
@@ -55,13 +60,21 @@ export default class ChatClient {
     this.notify();
   }
 
+  selectRoom(room) {
+    this.currentRoom = room;
+    this.notify();
+  }
+
   onReceiveChatMessage(messageData) {
     this.addMessageDataToRoom(messageData);
     this.notify();
   }
 
   onReceiveSystemMessage(messageData) {
-    this.addMessageDataToRoom({ nickname: 'System', ...messageData });
+    this.addMessageDataToRoom({
+      nickname: 'System',
+      type: MessageType.SYSTEM_MESSAGE,
+      ...messageData });
     this.notify();
   }
 

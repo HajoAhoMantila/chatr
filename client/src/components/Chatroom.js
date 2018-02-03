@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import './Chatroom.css';
+import { MessageType } from '../chat/ChatClient';
 
 export default class Chatroom extends Component {
   static propTypes = {
@@ -35,12 +36,13 @@ export default class Chatroom extends Component {
   chatMessageListItems() {
     const messageKey = (message, index) => `${message.message}-${index}`;
     const messageId = (message, index) => `${message.nickname}-${index}`;
+    const messageClass = message => (message.type === MessageType.SYSTEM_MESSAGE ? 'system-message' : 'message');
 
     const { messages } = this.props;
     return messages.map((message, index) => (
       <div id={messageId(message, index)} key={messageKey(message, index)}>
-        <div className="message">
-          <div className="message-nickname">{message.nickname}:</div>
+        <div className={messageClass(message)}>
+          {message.nickname && <div className="message-nickname">{message.nickname}:</div>}
           <div className="message-message">{message.message}</div>
         </div>
       </div>
@@ -54,14 +56,19 @@ export default class Chatroom extends Component {
 
         <div id="chat-message-list">
           {this.chatMessageListItems()}
-          <div ref={(element) => { this.endOfListElement = element; }} />
+          <div ref={(element) => {
+            this.endOfListElement = element;
+          }}
+          />
         </div>
 
         <form onSubmit={this.handleMessageSubmit}>
           <input
             id="message-input-text"
             type="text"
-            ref={(ref) => { this.messageInput = ref; }}
+            ref={(ref) => {
+              this.messageInput = ref;
+            }}
             placeholder="Enter a chat message..."
           />
           <input id="message-input-submit" type="submit" value="Send" />

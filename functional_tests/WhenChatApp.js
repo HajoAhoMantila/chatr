@@ -53,6 +53,10 @@ export default class WhenChatApp extends Stage {
 
   the_user_sends_a_chat_message() {
     const message = this.nickname + generate(32);
+    return this.the_user_sends_the_chat_message(message);
+  }
+
+  the_user_sends_the_chat_message(message) {
     doAsync(async () => {
       await this.chrome.type('#message-input-text', message);
       await this.chrome.type('#message-input-text', '\r');
@@ -61,11 +65,18 @@ export default class WhenChatApp extends Stage {
     return this;
   }
 
-  the_user_enters_the_new_chat_room_name(room) {
-    return this.user_$_enters_the_new_chat_room_name(this.nickname, room);
+  the_user_joins_the_chat_room(room) {
+    return this.user_$_joins_the_chat_room(this.nickname, room);
   }
 
-  user_$_enters_the_new_chat_room_name(nickname, room) {
+  the_user_switches_to_chat_room(room) {
+    doAsync(async () => {
+      await this.chrome.click(`#room-${room}`);
+    });
+    return this;
+  }
+
+  user_$_joins_the_chat_room(nickname, room) {
     this.setChromeForUser(nickname);
     doAsync(async () => {
       await this.chrome.type('#newchatroom-input-text', room);

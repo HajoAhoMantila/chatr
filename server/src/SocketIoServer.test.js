@@ -45,7 +45,7 @@ describe('Socket.IO Server responds to a single client', () => {
     client.emit(ChatEvent.MESSAGE_FROM_CLIENT, testPayload);
   });
 
-  test('Server broadcasts join nickname is given when connecting', (done) => {
+  test('Server broadcasts join if nickname is given when connecting', (done) => {
     client = io(url, { query: { nickname: USER_A } });
 
     client.on(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, (data) => {
