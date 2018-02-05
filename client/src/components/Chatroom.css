@@ -1,10 +1,21 @@
 #chatroom {
-  padding: 10px;
+  padding: 0px 0px 0px 10px;
+}
+
+#chatroom-label {
+  font-weight: bold;
+  float: left;
+  margin: 0px 10px 0px 0px;
+}
+
+#chatroom-name {
+  font-weight: bold;
+  margin: 0px 0px 0px 0px;
 }
 
 #chat-message-list {
-  height: 500px;
-  max-height: 500px;
+  height: 400px;
+  max-height: 400px;
   overflow: auto;
 }
 
@@ -12,19 +23,28 @@
   width: 500px;
   font-style: italic;
   color: DarkGray;
-  overflow: hidden; /* will contain if #first is longer than #second */
+  overflow: hidden;
 }
 
 .message {
   width: 500px;
-  overflow: hidden; /* will contain if #first is longer than #second */
+  overflow: hidden;
 }
 
 .message-nickname {
   width: 100px;
-  float: left; /* add this */
+  float: left;
 }
 
 .message-message {
-  overflow: hidden; /* if you don't want #second to wrap below #first */
+  overflow: hidden;
+}
+
+#message-input-submit {
+  margin: 10px 0px 0px 0px;
+  border: none;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
 }

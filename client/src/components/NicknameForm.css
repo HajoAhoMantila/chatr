@@ -1,5 +1,7 @@
 #nickname-input-text {
   text-align: left;
+  display: inline-block;
+  margin: 10px 10px
 }
 
 #nickname-input-submit {
@@ -7,4 +9,6 @@
   color: white;
   text-decoration: none;
   cursor: pointer;
+  display: inline-block;
+  margin: 0px 10px;
 }

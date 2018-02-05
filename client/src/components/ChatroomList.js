@@ -19,7 +19,10 @@ export default class ChatroomList extends Component {
 
   handleNewChatRoomSubmit(event) {
     event.preventDefault();
-    this.props.joinRoomCallback(this.newChatRoomInput.value);
+    const roomName = this.newChatRoomInput.value;
+    if (roomName) {
+      this.props.joinRoomCallback(this.newChatRoomInput.value);
+    }
     this.newChatRoomInput.value = '';
   }
 
@@ -46,7 +49,8 @@ export default class ChatroomList extends Component {
 
   render() {
     return (
-      <div id="chatroom-list">
+      <div id="chatrooms-list">
+        <div id="chatrooms-label">Chatrooms</div>
         {this.chatroomListItems()}
 
         <form onSubmit={this.handleNewChatRoomSubmit}>
@@ -58,7 +62,7 @@ export default class ChatroomList extends Component {
             }}
             placeholder="Enter a room name"
           />
-          <input id="newchatroom-input-submit" type="submit" value="Join" />
+          <input id="newchatroom-input-submit" type="submit" value="Join room" />
         </form>
       </div>
     );

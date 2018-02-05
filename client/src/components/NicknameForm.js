@@ -14,21 +14,24 @@ export default class NicknameForm extends Component {
   }
 
   handleSubmit(event) {
-    this.props.setNicknameCallback(this.nicknameInput.value);
+    const nickname = this.nicknameInput.value;
+    if (nickname) {
+      this.props.setNicknameCallback(this.nicknameInput.value);
+    }
     event.preventDefault();
   }
 
   render() {
     return (
       <form id="nickname-input" onSubmit={this.handleSubmit}>
-        <label htmlFor="nickname-input-text">Name:
-          <input
-            id="nickname-input-text"
-            type="text"
-            ref={(ref) => { this.nicknameInput = ref; }}
-            placeholder="Enter a nickname"
-          />
-        </label>
+        <input
+          id="nickname-input-text"
+          type="text"
+          ref={(ref) => {
+            this.nicknameInput = ref;
+          }}
+          placeholder="Enter a nickname"
+        />
         <input id="nickname-input-submit" type="submit" value="Join chat" />
       </form>
     );

@@ -14,3 +14,13 @@ test('Calls callback when nickname is submitted', () => {
 
   expect(setNickname).toBeCalledWith('username');
 });
+
+test('Does not call callback when empty nickname is submitted', () => {
+  const setNickname = jest.fn();
+  const nicknameForm = mount(<NicknameForm setNicknameCallback={setNickname} />);
+
+  nicknameForm.find('#nickname-input-text').instance().value = '';
+  nicknameForm.find('#nickname-input').simulate('submit');
+
+  expect(setNickname).not.toBeCalled();
+});

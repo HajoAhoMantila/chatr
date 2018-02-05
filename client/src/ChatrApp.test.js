@@ -16,7 +16,7 @@ describe('<ChatrApp />', () => {
 
     expect(wrapper.find('NicknameForm').exists()).toBeTruthy();
     expect(wrapper.find('Chatroom').exists()).toBeFalsy();
-    expect(wrapper.find('#nickname').text()).toEqual('');
+    expect(wrapper.find('#nickname-section').exists()).toBeFalsy();
   });
 
   it('Should not display nickname dialog but nickname and chatroom when nickname is set', () => {

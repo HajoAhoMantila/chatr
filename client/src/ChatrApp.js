@@ -43,7 +43,12 @@ export default class ChatrApp extends Component {
 
         <header className="App-header">
           <h1 className="App-title">chatr</h1>
-          <div id="nickname">{this.state.nickname}</div>
+          {this.state.nickname &&
+          <div id="nickname-section">
+            <div id="nickname-label">Nickname: </div>
+            <div id="nickname">{this.state.nickname}</div>
+          </div>
+          }
         </header>
 
         {!this.state.nickname &&
@@ -57,6 +62,7 @@ export default class ChatrApp extends Component {
             roomNames={this.state.rooms}
             joinRoomCallback={this.chat.joinRoom}
           />
+          <hr />
           <Chatroom
             name={this.state.currentRoom}
             sendMessageCallback={this.chat.sendMessage}

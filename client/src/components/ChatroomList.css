@@ -1,7 +1,40 @@
+#chatrooms-list {
+  background: white;
+}
+
+#chatrooms-label {
+  margin: 0px 10px;
+}
+
 .roomname {
-  font-weight:normal
+  font-weight:normal;
+  border: none;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+  margin: 10px 0px 0px 10px;
 }
 
 .roomname-selected {
-  font-weight:bold
+  font-weight:bold;
+  border: none;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+  margin: 10px 0px 0px 10px;
+}
+
+#newchatroom-input-text {
+  margin: 0px 10px
+}
+
+#newchatroom-input-submit {
+  margin: 10px 10px;
+  border: none;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
 }

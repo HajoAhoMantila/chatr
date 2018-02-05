@@ -52,7 +52,7 @@ export default class Chatroom extends Component {
   render() {
     return (
       <div id="chatroom">
-        <div id="chatroom-name">{this.props.name}</div>
+        <div id="chatroom-label">Room:</div><div id="chatroom-name">{this.props.name}</div>
 
         <div id="chat-message-list">
           {this.chatMessageListItems()}
