@@ -14,7 +14,15 @@ let server;
 let ioClient;
 let ioServer;
 
-describe('Socket.io client/server integration tests - happy path', () => {
+const defaultChatClientMock = {
+  nickname: undefined,
+  onReceiveChatMessage: jest.fn(),
+  onReceiveSystemMessage: jest.fn(),
+  onNewRoomCreated: jest.fn(),
+  onUpdateRoomList: jest.fn(),
+};
+
+describe('Socket.io client/server integration tests', () => {
   beforeEach((done) => {
     server = http.Server(express());
     ioServer = new SocketIoServer(server);
@@ -34,16 +42,14 @@ describe('Socket.io client/server integration tests - happy path', () => {
 
   test('Socket.io client connects and receives join message', (done) => {
     const nickname = 'Alice';
-    ChatClient.mockImplementation(() => ({
-      get nickname() {
-        return nickname;
-      },
+    ChatClient.mockImplementation(() => (Object.assign({}, defaultChatClientMock, {
+      nickname,
 
       onReceiveSystemMessage: (message) => {
         expect(message).toEqual({ message: `User ${nickname} joined` });
         done();
       },
-    }));
+    })));
 
     ioClient.connect(new ChatClient());
   });
@@ -52,17 +58,14 @@ describe('Socket.io client/server integration tests - happy path', () => {
     const nickname = 'Alice';
     const message = 'foobar';
 
-    ChatClient.mockImplementation(() => ({
-      get nickname() {
-        return nickname;
-      },
+    ChatClient.mockImplementation(() => (Object.assign({}, defaultChatClientMock, {
+      nickname,
+
       onReceiveChatMessage: (receivedMessage) => {
         expect(receivedMessage).toEqual({ nickname, message });
         done();
       },
-      onReceiveSystemMessage: () => {
-      },
-    }));
+    })));
 
     ioClient.connect(new ChatClient());
     ioClient.sendMessage(message);
@@ -72,16 +75,15 @@ describe('Socket.io client/server integration tests - happy path', () => {
     const room = 'Kitchen';
     const nickname = 'Alice';
 
-    ChatClient.mockImplementation(() => ({
-      get nickname() {
-        return nickname;
-      },
+    ChatClient.mockImplementation(() => (Object.assign({}, defaultChatClientMock, {
+      nickname,
+
       onReceiveSystemMessage: (message) => {
         if (deepEqual(message, { room, message: `${nickname} joined room ${room}` })) {
           done();
         }
       },
-    }));
+    })));
 
     ioClient.connect(new ChatClient());
     ioClient.joinRoom('Kitchen');
@@ -92,22 +94,46 @@ describe('Socket.io client/server integration tests - happy path', () => {
     const room = 'Python';
     const message = 'Explicit is better than implicit';
 
-    ChatClient.mockImplementation(() => ({
-      get nickname() {
-        return nickname;
-      },
+    ChatClient.mockImplementation(() => (Object.assign({}, defaultChatClientMock, {
+      nickname,
+
       onReceiveChatMessage: (receivedMessage) => {
         if (deepEqual(receivedMessage, { message, nickname, room })) {
           done();
         }
       },
-      onReceiveSystemMessage: () => {
-      },
-    }));
+    })));
 
     ioClient.connect(new ChatClient());
     ioClient.joinRoom(room);
     ioClient.sendMessageInRoom(message, room);
+  });
+
+  test('Socket.io client forwards room announcement', (done) => {
+    const newRoom = 'Sauna';
+
+    let expectedCalls = 2;
+    const doneIfAllExpectedCallsReceived = () => {
+      expectedCalls -= 1;
+      if (expectedCalls === 0) {
+        done();
+      }
+    };
+
+    ChatClient.mockImplementation(() => (Object.assign({}, defaultChatClientMock, {
+      onNewRoomCreated: (room) => {
+        expect(room).toEqual(newRoom);
+        doneIfAllExpectedCallsReceived();
+      },
+      onUpdateRoomList: (rooms) => {
+        if (deepEqual(rooms, [newRoom])) {
+          doneIfAllExpectedCallsReceived();
+        }
+      },
+    })));
+
+    ioClient.connect(new ChatClient());
+    ioClient.joinRoom(newRoom);
   });
 });
 
@@ -118,12 +144,12 @@ describe('Socket.io client/server integration tests - error scenarios', () => {
   });
 
   test('Socket.io yields error message if server down', (done) => {
-    ChatClient.mockImplementation(() => ({
+    ChatClient.mockImplementation(() => (Object.assign({}, defaultChatClientMock, {
       onReceiveSystemMessage: (messageData) => {
         expect(messageData.message).toContain('Error connecting to server');
         done();
       },
-    }));
+    })));
     ioClient = new SocketIoClient(url);
     ioClient.connect(new ChatClient());
   });

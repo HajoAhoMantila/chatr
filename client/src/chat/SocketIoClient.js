@@ -22,6 +22,14 @@ export default class SocketIoClient {
     this.socket.on(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, (messageData) => {
       this.chat.onReceiveSystemMessage(messageData);
     });
+
+    this.socket.on(ChatEvent.ANNOUNCE_ROOMS, (messageData) => {
+      if (messageData.newRoom) {
+        this.chat.onNewRoomCreated(messageData.newRoom);
+      }
+      this.chat.onUpdateRoomList(messageData.rooms);
+    });
+
     this.socket.on(ClientEvent.ERROR, (error) => {
       this.error(`Error: ${error}`);
     });

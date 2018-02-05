@@ -1,11 +1,12 @@
 import SocketIO from 'socket.io';
+import { Set } from 'immutable';
 import { ChatEvent, ServerEvent } from './shared/eventTypes';
 
 export default class SocketIoServer {
   constructor(httpServer) {
     this.httpServer = httpServer;
     this.io = undefined;
-
+    this.rooms = Set();
     this.onJoinRoom = this.onJoinRoom.bind(this);
   }
 
@@ -32,9 +33,7 @@ export default class SocketIoServer {
   registerEventHandlers() {
     this.io.on(ServerEvent.CONNECT, (socket) => {
       const { nickname } = socket.handshake.query;
-      if (nickname) {
-        SocketIoServer.broadcastSystemMessage(socket, `User ${nickname} joined`);
-      }
+      this.welcomeClient(nickname, socket);
 
       socket.on(ChatEvent.MESSAGE_FROM_CLIENT, (data) => {
         SocketIoServer.onMessageFromClient(socket, data);
@@ -46,9 +45,21 @@ export default class SocketIoServer {
     });
   }
 
+  welcomeClient(nickname, socket) {
+    if (nickname) {
+      this.broadcastSystemMessageInDefaultRoom(`User ${nickname} joined`);
+    }
+    this.announceRoomsToClient(socket);
+  }
+
+  announceRoomsToClient(socket) {
+    socket.emit(ChatEvent.ANNOUNCE_ROOMS, { rooms: this.rooms });
+  }
+
   onJoinRoom(socket, data) {
     socket.join(data.room);
     this.sendSystemMessageInRoom(`${data.nickname} joined room ${data.room}`, data.room);
+    this.addAndAnnounceRoom(data.room);
   }
 
   static onMessageFromClient(socket, data) {
@@ -56,9 +67,22 @@ export default class SocketIoServer {
     socket.emit(ChatEvent.MESSAGE_FROM_SERVER, data);
   }
 
-  static broadcastSystemMessage(socket, message) {
-    socket.broadcast.emit(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, { message });
-    socket.emit(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, { message });
+  addAndAnnounceRoom(room) {
+    if (!this.rooms.includes(room)) {
+      this.rooms = this.rooms.add(room);
+      this.broadcastToAllInDefaultRoom(
+        ChatEvent.ANNOUNCE_ROOMS,
+        { newRoom: room, rooms: this.rooms },
+      );
+    }
+  }
+
+  broadcastToAllInDefaultRoom(eventType, data) {
+    this.io.of('/').emit(eventType, data);
+  }
+
+  broadcastSystemMessageInDefaultRoom(message) {
+    this.broadcastToAllInDefaultRoom(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, { message });
   }
 }
 

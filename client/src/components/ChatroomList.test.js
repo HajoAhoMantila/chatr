@@ -1,4 +1,4 @@
-import { List } from 'immutable';
+import { Set } from 'immutable';
 import Adapter from 'enzyme-adapter-react-16/build/index';
 import { configure, shallow, mount } from 'enzyme';
 import React from 'react';
@@ -10,9 +10,8 @@ describe('<ChatroomList />', () => {
   it('Renders the chat room list', () => {
     const wrapper = shallow(<ChatroomList
       currentRoom="Kitchen"
-      roomNames={new List(['LivingRoom', 'Kitchen', 'Bathroom'])}
-      createRoomCallback={jest.fn()}
-      selectRoomCallback={jest.fn()}
+      roomNames={new Set(['LivingRoom', 'Kitchen', 'Bathroom'])}
+      joinRoomCallback={jest.fn()}
     />);
 
     expect(wrapper.find('.roomname-selected')).toHaveLength(1);
@@ -26,9 +25,8 @@ describe('<ChatroomList />', () => {
     const createAndJoinRoomCallback = jest.fn();
     const wrapper = mount(<ChatroomList
       currentRoom="LivingRoom"
-      roomNames={new List(['LivingRoom', 'Kitchen', 'Bathroom'])}
-      createRoomCallback={createAndJoinRoomCallback}
-      selectRoomCallback={jest.fn()}
+      roomNames={new Set(['LivingRoom', 'Kitchen', 'Bathroom'])}
+      joinRoomCallback={createAndJoinRoomCallback}
     />);
 
     const newRoomName = 'ShinyNewRoom';
@@ -40,15 +38,14 @@ describe('<ChatroomList />', () => {
   });
 
   it('Calls callback when room name is clicked', () => {
-    const selectRoomCallback = jest.fn();
+    const joinRoomCallback = jest.fn();
     const wrapper = mount(<ChatroomList
       currentRoom="LivingRoom"
-      roomNames={new List(['LivingRoom', 'Kitchen', 'Bathroom'])}
-      createRoomCallback={jest.fn()}
-      selectRoomCallback={selectRoomCallback}
+      roomNames={new Set(['LivingRoom', 'Kitchen', 'Bathroom'])}
+      joinRoomCallback={joinRoomCallback}
     />);
 
     wrapper.find('#room-Kitchen').simulate('click');
-    expect(selectRoomCallback).toBeCalledWith('Kitchen');
+    expect(joinRoomCallback).toBeCalledWith('Kitchen');
   });
 });

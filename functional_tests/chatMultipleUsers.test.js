@@ -26,16 +26,16 @@ scenarios(
         .and()
         .the_user_enters_the_nickname(userB);
 
-      when().the_user_$_sends_a_chat_message(userA);
+      when().the_user_$_sends_a_chat_message(userA)
+        .and().the_user_$_sends_a_chat_message(userB);
+
       then().user_$_can_see_the_chat_message_of_user_$(userA, userA);
       then().user_$_can_see_the_chat_message_of_user_$(userB, userA);
 
-      when().the_user_$_sends_a_chat_message(userB);
       then().user_$_can_see_the_chat_message_of_user_$(userA, userB);
       then().user_$_can_see_the_chat_message_of_user_$(userB, userB);
     }),
   }),
-
 );
 
 afterEach(() => {

@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { List } from 'immutable';
+import { Set } from 'immutable';
 import './ChatroomList.css';
 
 export default class ChatroomList extends Component {
   static propTypes = {
     currentRoom: PropTypes.string.isRequired,
-    roomNames: PropTypes.instanceOf(List).isRequired,
-    createRoomCallback: PropTypes.func.isRequired,
-    selectRoomCallback: PropTypes.func.isRequired,
+    roomNames: PropTypes.instanceOf(Set).isRequired,
+    joinRoomCallback: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -20,13 +19,13 @@ export default class ChatroomList extends Component {
 
   handleNewChatRoomSubmit(event) {
     event.preventDefault();
-    this.props.createRoomCallback(this.newChatRoomInput.value);
+    this.props.joinRoomCallback(this.newChatRoomInput.value);
     this.newChatRoomInput.value = '';
   }
 
   handleClickRoomName(event, roomName) {
     event.preventDefault();
-    this.props.selectRoomCallback(roomName);
+    this.props.joinRoomCallback(roomName);
   }
 
   chatroomListItems() {

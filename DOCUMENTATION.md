@@ -1,11 +1,14 @@
 # Development documentation
 
+## Test concept
+
+
 ## Decision log
 
 ### Node + React is used
 ...as the goal is to learn it.
 
-### ES6 with ES7 extensions is used
+### ES6 with some ES7 extensions is used
 It's the default used by create-react-app.
 
 ### JsGiven Scenario tests are written for functional tests
