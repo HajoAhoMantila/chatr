@@ -3,9 +3,11 @@
 # chatr (https://chatr.herokuapp.com/)
 A chat application MVP. Features:
 * Users can choose a nickname
+* Users can exchange chat messages
 * Users can chat in multiple rooms
 * Existing rooms are announced to new users
 
+User stories & acceptance criteria: https://github.com/HajoAhoMantila/chatr/issues?utf8=%E2%9C%93&q=is%3Aissue+
 
 GitHub Repo: https://github.com/HajoAhoMantila/chatr
 
