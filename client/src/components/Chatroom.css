@@ -43,8 +43,12 @@
 #message-input-submit {
   margin: 10px 0px 0px 0px;
   border: none;
-  color: white;
+  color: black;
   text-decoration: none;
   cursor: pointer;
   display: inline-block;
+}
+
+#message-input-submit:hover{
+  background: #bbbbbb;
 }
