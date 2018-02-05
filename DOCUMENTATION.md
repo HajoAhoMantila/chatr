@@ -1,8 +1,5 @@
 # Development documentation
 
-## Test concept
-
-
 ## Decision log
 
 ### Node + React is used

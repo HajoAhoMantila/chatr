@@ -1,15 +1,19 @@
 [![Build Status](https://travis-ci.org/HajoAhoMantila/chatr.svg?branch=master)](https://travis-ci.org/HajoAhoMantila/chatr)
 
 # chatr (https://chatr.herokuapp.com/)
-Chat application MVP 
+A chat application MVP. Features:
+* Users can choose a nickname
+* Users can chat in multiple rooms
+* Existing rooms are announced to new users
 
-The app is staged automatically to Heroku at http://chatr.herokuapp.com/ 
 
 GitHub Repo: https://github.com/HajoAhoMantila/chatr
 
 CI: https://travis-ci.org/HajoAhoMantila/chatr
 
-JGiven scenario test reports are published at 
+On successful builds the app is staged automatically to Heroku at http://chatr.herokuapp.com/ 
+
+JGiven BDD scenario test reports are published at 
 https://s3.eu-central-1.amazonaws.com/chatr-artifacts/index.html
 
 ## Getting started
@@ -83,4 +87,4 @@ To run the functional tests against the production app, execute
 
 `yarn test:prod`
 
-(You will have to adapt the `CHATR_URL` specified in the `package.json` file.)
+(You will have to adapt the `CHATR_URL` specified in the `package.json` file to match your deployment.)
