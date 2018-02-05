@@ -41,6 +41,13 @@ export default class ThenChatApp extends Stage {
     });
   }
 
+  expectElementDoesNotContainText(selector, expectedText) {
+    doAsync(async () => {
+      const text = await this.chrome.text(selector);
+      expect(text).not.toContain(expectedText);
+    });
+  }
+
   the_user_can_see_an_input_field_for_a_nickname() {
     this.expectElementExists('#nickname-input');
     return this;
@@ -67,12 +74,19 @@ export default class ThenChatApp extends Stage {
     return this;
   }
 
-  the_chat_room_$_is_not_selected_in_the_list_of_chatrooms(chatroomName) {
-    this.expectElementContainsText('.roomname', chatroomName);
+  the_chat_room_$_is_listed_and_not_selected(chatroomName) {
+    this.expectElementContainsText(`#room-${chatroomName}`, chatroomName);
+    this.expectElementDoesNotContainText('.roomname-selected', chatroomName);
     return this;
   }
 
-  the_chat_room_$_is_selected_in_the_list_of_chatrooms(chatroomName) {
+  the_chat_room_$_is_listed_and_not_selected_for_user(chatroomName, nickname) {
+    this.setChromeForUser(nickname);
+    this.the_chat_room_$_is_listed_and_not_selected(chatroomName);
+    return this;
+  }
+
+  the_chat_room_$_is_listed_and_selected(chatroomName) {
     this.expectElementContainsText('.roomname-selected', chatroomName);
     return this;
   }

@@ -19,7 +19,7 @@ scenarios(
 
       when().the_user_enters_a_nickname();
       then().the_chat_room_$_is_visible('Lobby')
-        .and().the_chat_room_$_is_selected_in_the_list_of_chatrooms('Lobby');
+        .and().the_chat_room_$_is_listed_and_selected('Lobby');
     }),
 
     the_user_can_write_a_chat_message: scenario({}, () => {

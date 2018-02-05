@@ -25,9 +25,9 @@ scenarios(
 
       then().the_chat_room_$_is_visible('Munich')
         .and()
-        .the_chat_room_$_is_selected_in_the_list_of_chatrooms('Munich')
+        .the_chat_room_$_is_listed_and_selected('Munich')
         .and()
-        .the_chat_room_$_is_not_selected_in_the_list_of_chatrooms('Lobby')
+        .the_chat_room_$_is_listed_and_not_selected('Lobby')
         .and()
         .a_system_message_is_shown_announcing_the_user_joined_the_room();
     }),
@@ -92,6 +92,26 @@ scenarios(
 
       then().the_user_can_see_the_message(messageB);
     }),
+
+    when_joining_users_are_informed_about_existing_rooms: scenario({}, () => {
+      const newRoomName = 'Berlin';
+
+      given().a_user_with_nickname_$_and_a_Chrome_Browser(userA)
+        .and().a_user_with_nickname_$_and_a_Chrome_Browser(userB);
+
+      when().the_user_$_opens_the_app(userA)
+        .and()
+        .the_user_enters_the_nickname(userA)
+        .and()
+        .user_$_joins_the_chat_room(userA, newRoomName)
+        .and()
+        .the_user_$_opens_the_app(userB)
+        .and()
+        .the_user_enters_the_nickname(userB);
+
+      then().the_chat_room_$_is_listed_and_not_selected_for_user(newRoomName, userB);
+    }),
+
   }),
 );
 
