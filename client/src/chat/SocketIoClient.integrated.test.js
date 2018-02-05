@@ -20,6 +20,8 @@ const defaultChatClientMock = {
   onReceiveSystemMessage: jest.fn(),
   onNewRoomCreated: jest.fn(),
   onUpdateRoomList: jest.fn(),
+  onUserJoinsChat: jest.fn(),
+  onUserJoinsRoom: jest.fn(),
 };
 
 describe('Socket.io client/server integration tests', () => {
@@ -41,12 +43,12 @@ describe('Socket.io client/server integration tests', () => {
   });
 
   test('Socket.io client connects and receives join message', (done) => {
-    const nickname = 'Alice';
+    const testNickname = 'Alice';
     ChatClient.mockImplementation(() => (Object.assign({}, defaultChatClientMock, {
-      nickname,
+      testNickname,
 
-      onReceiveSystemMessage: (message) => {
-        expect(message).toEqual({ message: `User ${nickname} joined` });
+      onUserJoinsChat: (nickname) => {
+        expect(nickname).toEqual(nickname);
         done();
       },
     })));
@@ -72,21 +74,21 @@ describe('Socket.io client/server integration tests', () => {
   });
 
   test('Socket.io client can join room', (done) => {
-    const room = 'Kitchen';
-    const nickname = 'Alice';
+    const testRoom = 'Kitchen';
+    const testNickname = 'Alice';
 
     ChatClient.mockImplementation(() => (Object.assign({}, defaultChatClientMock, {
-      nickname,
+      nickname: testNickname,
 
-      onReceiveSystemMessage: (message) => {
-        if (deepEqual(message, { room, message: `${nickname} joined room ${room}` })) {
+      onUserJoinsRoom: (nickname, room) => {
+        if (room === testRoom && nickname === testNickname) {
           done();
         }
       },
     })));
 
     ioClient.connect(new ChatClient());
-    ioClient.joinRoom('Kitchen');
+    ioClient.joinRoom(testRoom);
   });
 
   test('Socket.io client can send and receive message in room', (done) => {

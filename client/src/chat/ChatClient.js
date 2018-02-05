@@ -96,6 +96,16 @@ export default class ChatClient {
     this.notify();
   }
 
+  onUserJoinsChat(nickname) {
+    this.addSystemMessageToRoom({ message: `${nickname} joined` });
+    this.notify();
+  }
+
+  onUserJoinsRoom(nickname, room) {
+    this.addSystemMessageToRoom({ room, message: `${nickname} joined room ${room}` });
+    this.notify();
+  }
+
   notify() {
     this.stateChangeCallback(this);
   }

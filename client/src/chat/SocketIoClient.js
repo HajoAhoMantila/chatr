@@ -19,8 +19,12 @@ export default class SocketIoClient {
       this.chat.onReceiveChatMessage(messageData);
     });
 
-    this.socket.on(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, (messageData) => {
-      this.chat.onReceiveSystemMessage(messageData);
+    this.socket.on(ChatEvent.ANNOUNCE_JOIN, (messageData) => {
+      if (messageData.room) {
+        this.chat.onUserJoinsRoom(messageData.nickname, messageData.room);
+      } else {
+        this.chat.onUserJoinsChat(messageData.nickname);
+      }
     });
 
     this.socket.on(ChatEvent.ANNOUNCE_ROOMS, (messageData) => {

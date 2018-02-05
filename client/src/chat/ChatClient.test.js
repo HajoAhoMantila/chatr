@@ -178,3 +178,31 @@ test('When updating room list keeps default room', () => {
 
   expect(client.rooms).toContainEqual(DEFAULT_ROOM);
 });
+
+test('When user joins user is announced in default room', () => {
+  const joiningUser = 'James';
+  client.onUserJoinsChat(joiningUser);
+
+  expect(client.messages[DEFAULT_ROOM]).toContainEqual({
+    message: `${joiningUser} joined`,
+    nickname: 'System',
+    type: 'System',
+  });
+  expect(notificationCallback).toBeCalledWith(client);
+});
+
+test('When user joins room user is announced in room', () => {
+  const joiningUser = 'George';
+  const room = 'Stage';
+  client.addRoomToRoomsJoined(room);
+  client.onUserJoinsRoom(joiningUser, room);
+
+  expect(client.messages[room]).toContainEqual({
+    message: `${joiningUser} joined room ${room}`,
+    room,
+    nickname: 'System',
+    type: 'System',
+  });
+  expect(notificationCallback).toBeCalledWith(client);
+});
+

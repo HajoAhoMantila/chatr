@@ -12,10 +12,6 @@ const ROOM_1 = 'Kitchen';
 const ROOM_2 = 'Living Room';
 const USER_A = 'Alice';
 const USER_B = 'Bob';
-const MESSAGE_USER_A_JOINED = 'User Alice joined';
-const MESSAGE_USER_B_JOINED = 'User Bob joined';
-const MESSAGE_USER_A_JOINED_ROOM = 'Alice joined room Kitchen';
-const MESSAGE_USER_B_JOINED_ROOM = 'Bob joined room Kitchen';
 
 beforeEach((done) => {
   server = new ExpressServer(testPort);
@@ -50,16 +46,16 @@ describe('Socket.IO Server responds to a single client', () => {
   test('Server broadcasts join if nickname is given when connecting', (done) => {
     client = io(url, { query: { nickname: USER_A } });
 
-    client.on(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, (data) => {
-      expect(data).toEqual({ message: MESSAGE_USER_A_JOINED });
+    client.on(ChatEvent.ANNOUNCE_JOIN, (data) => {
+      expect(data).toEqual({ nickname: USER_A });
       done();
     });
   });
 
   test('Server broadcasts user joining room', (done) => {
     client = io(url)
-      .on(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, (data) => {
-        expect(data).toEqual({ room: ROOM_1, message: MESSAGE_USER_A_JOINED_ROOM });
+      .on(ChatEvent.ANNOUNCE_JOIN, (data) => {
+        expect(data).toEqual({ room: ROOM_1, nickname: USER_A });
         done();
       });
 
@@ -118,18 +114,18 @@ describe('Socket.io server responds to multiple clients', () => {
 
   test('User join message is received by all users in default room', (done) => {
     remainingClientsToReceive = 2;
-    const userBJoinedMessage = { message: MESSAGE_USER_B_JOINED };
+    const userBJoinedMessageData = { nickname: USER_B };
 
     clientA = io(url, { query: { nickname: USER_A } })
-      .on(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, (data) => {
-        if (deepEqual(data, userBJoinedMessage)) {
+      .on(ChatEvent.ANNOUNCE_JOIN, (data) => {
+        if (deepEqual(data, userBJoinedMessageData)) {
           stopIfAllClientsReceived(done);
         }
       });
 
     clientB = io(url, { query: { nickname: USER_B } })
-      .on(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, (data) => {
-        if (deepEqual(data, userBJoinedMessage)) {
+      .on(ChatEvent.ANNOUNCE_JOIN, (data) => {
+        if (deepEqual(data, userBJoinedMessageData)) {
           stopIfAllClientsReceived(done);
         }
       });
@@ -139,18 +135,18 @@ describe('Socket.io server responds to multiple clients', () => {
     remainingClientsToReceive = 3;
 
     clientA =
-      io(url).on(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, (data) => {
+      io(url).on(ChatEvent.ANNOUNCE_JOIN, (data) => {
         if (remainingClientsToReceive === 3) {
-          expect(data).toEqual({ room: ROOM_1, message: MESSAGE_USER_A_JOINED_ROOM });
+          expect(data).toEqual({ room: ROOM_1, nickname: USER_A });
         } else {
-          expect(data).toEqual({ room: ROOM_1, message: MESSAGE_USER_B_JOINED_ROOM });
+          expect(data).toEqual({ room: ROOM_1, nickname: USER_B });
         }
         stopIfAllClientsReceived(done);
       });
 
     clientB = io(url)
-      .on(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, (data) => {
-        expect(data).toEqual({ room: ROOM_1, message: MESSAGE_USER_B_JOINED_ROOM });
+      .on(ChatEvent.ANNOUNCE_JOIN, (data) => {
+        expect(data).toEqual({ room: ROOM_1, nickname: USER_B });
         stopIfAllClientsReceived(done);
       });
 

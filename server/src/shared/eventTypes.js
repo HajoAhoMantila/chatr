@@ -5,8 +5,8 @@ export const ChatEvent = Object.freeze({
   MESSAGE_FROM_CLIENT: 'messageFromClient',
   // Events sent by server
   MESSAGE_FROM_SERVER: 'messageFromServer',
-  SYSTEM_MESSAGE_FROM_SERVER: 'systemMessageFromServer',
   ANNOUNCE_ROOMS: 'announceRooms',
+  ANNOUNCE_JOIN: 'announceJoin',
 });
 
 // Generic Socket.io-events on the server side

@@ -23,13 +23,6 @@ export default class SocketIoServer {
     this.io.sockets.in(room).emit(eventType, data);
   }
 
-  sendSystemMessageInRoom(message, room) {
-    this.emitEventInRoom(
-      room, ChatEvent.SYSTEM_MESSAGE_FROM_SERVER,
-      { room, message },
-    );
-  }
-
   registerEventHandlers() {
     this.io.on(ServerEvent.CONNECT, (socket) => {
       const { nickname } = socket.handshake.query;
@@ -47,7 +40,7 @@ export default class SocketIoServer {
 
   welcomeClient(nickname, socket) {
     if (nickname) {
-      this.broadcastSystemMessageInDefaultRoom(`User ${nickname} joined`);
+      this.broadcastToAllInDefaultRoom(ChatEvent.ANNOUNCE_JOIN, { nickname });
     }
     this.announceRoomsToClient(socket);
   }
@@ -58,7 +51,11 @@ export default class SocketIoServer {
 
   onJoinRoom(socket, data) {
     socket.join(data.room);
-    this.sendSystemMessageInRoom(`${data.nickname} joined room ${data.room}`, data.room);
+
+    this.emitEventInRoom(
+      data.room, ChatEvent.ANNOUNCE_JOIN,
+      { room: data.room, nickname: data.nickname },
+    );
     this.addAndAnnounceRoom(data.room);
   }
 
@@ -79,10 +76,6 @@ export default class SocketIoServer {
 
   broadcastToAllInDefaultRoom(eventType, data) {
     this.io.of('/').emit(eventType, data);
-  }
-
-  broadcastSystemMessageInDefaultRoom(message) {
-    this.broadcastToAllInDefaultRoom(ChatEvent.SYSTEM_MESSAGE_FROM_SERVER, { message });
   }
 }
 
