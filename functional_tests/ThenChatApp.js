@@ -74,19 +74,19 @@ export default class ThenChatApp extends Stage {
     return this;
   }
 
-  the_chat_room_$_is_listed_and_not_selected(chatroomName) {
+  the_chat_room_$_is_listed_and_not_selected_in_the_room_list(chatroomName) {
     this.expectElementContainsText(`#room-${chatroomName}`, chatroomName);
     this.expectElementDoesNotContainText('.roomname-selected', chatroomName);
     return this;
   }
 
-  the_chat_room_$_is_listed_and_not_selected_for_user(chatroomName, nickname) {
+  the_chat_room_$_is_listed_and_not_selected_in_the_room_list_for_user(chatroomName, nickname) {
     this.setChromeForUser(nickname);
-    this.the_chat_room_$_is_listed_and_not_selected(chatroomName);
+    this.the_chat_room_$_is_listed_and_not_selected_in_the_room_list(chatroomName);
     return this;
   }
 
-  the_chat_room_$_is_listed_and_selected(chatroomName) {
+  the_chat_room_$_is_listed_and_selected_in_the_room_list(chatroomName) {
     this.expectElementContainsText('.roomname-selected', chatroomName);
     return this;
   }

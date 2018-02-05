@@ -25,9 +25,9 @@ scenarios(
 
       then().the_chat_room_$_is_visible('Munich')
         .and()
-        .the_chat_room_$_is_listed_and_selected('Munich')
+        .the_chat_room_$_is_listed_and_selected_in_the_room_list('Munich')
         .and()
-        .the_chat_room_$_is_listed_and_not_selected('Lobby')
+        .the_chat_room_$_is_listed_and_not_selected_in_the_room_list('Lobby')
         .and()
         .a_system_message_is_shown_announcing_the_user_joined_the_room();
     }),
@@ -55,11 +55,11 @@ scenarios(
         .and()
         .the_chat_room_$_is_visible_for_user(newRoomName, userB);
 
-      when().the_user_$_sends_a_chat_message(userA);
+      when().the_user_$_sends_a_chat_message(userA)
+        .and().the_user_$_sends_a_chat_message(userB);
       then().user_$_can_see_the_chat_message_of_user_$(userA, userA);
       then().user_$_can_see_the_chat_message_of_user_$(userB, userA);
 
-      when().the_user_$_sends_a_chat_message(userB);
       then().user_$_can_see_the_chat_message_of_user_$(userA, userB);
       then().user_$_can_see_the_chat_message_of_user_$(userB, userB);
     }),
@@ -94,7 +94,7 @@ scenarios(
     }),
 
     when_joining_users_are_informed_about_existing_rooms: scenario({}, () => {
-      const newRoomName = 'Berlin';
+      const roomname = 'Berlin';
 
       given().a_user_with_nickname_$_and_a_Chrome_Browser(userA)
         .and().a_user_with_nickname_$_and_a_Chrome_Browser(userB);
@@ -103,13 +103,13 @@ scenarios(
         .and()
         .the_user_enters_the_nickname(userA)
         .and()
-        .user_$_joins_the_chat_room(userA, newRoomName)
+        .user_$_joins_the_chat_room(userA, roomname)
         .and()
         .the_user_$_opens_the_app(userB)
         .and()
         .the_user_enters_the_nickname(userB);
 
-      then().the_chat_room_$_is_listed_and_not_selected_for_user(newRoomName, userB);
+      then().the_chat_room_$_is_listed_and_not_selected_in_the_room_list_for_user(roomname, userB);
     }),
 
   }),
