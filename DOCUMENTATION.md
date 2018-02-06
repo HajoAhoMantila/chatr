@@ -19,6 +19,16 @@ All objects set as state and passed as props must be immutable
 (as proposed by https://reactjs.org/docs/react-component.html#state).
 This enforces explicit state handling, resulting in more understandable code and less bugs.
 
+### No router and no state container is used for the React client app
+The app is not complex enough to justify the additional complexity introduced
+by a router and state container (e.g. Redux).
+
+### Testing approach for the Socket.io client and server  
+The app doesn't contain a lot of logic that has to be tested, but it's quite important to get the 
+integration between client and server right to not waste time. 
+The approach is to test the server through the socket.io interface to define the interface, 
+and then test the Socket.io client implementation integrated together with the real server. 
+
 ## Resources
 
 ### Basic node & tooling

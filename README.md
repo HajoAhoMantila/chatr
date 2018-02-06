@@ -7,6 +7,8 @@ A chat application MVP. Features:
 * Users can chat in multiple rooms
 * Existing rooms are announced to new users
 
+Stack: React client, node.js backend, communication is done with socket.io.
+
 User stories & acceptance criteria: https://github.com/HajoAhoMantila/chatr/issues?utf8=%E2%9C%93&q=is%3Aissue+
 
 GitHub Repo: https://github.com/HajoAhoMantila/chatr
