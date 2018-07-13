@@ -4,7 +4,7 @@ addons:
   chrome: stable
 language: node_js
 node_js:
-- 8.9.4
+- 8.11.3
 deploy:
   - provider: s3
     access_key_id: AKIAIN2WQVUUDATDY37A
